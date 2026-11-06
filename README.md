@@ -12,6 +12,8 @@ project uses:
 All of it runs on a laptop with free tools. **Every figure below comes from a measured run against ground
 truth.** The documents and their expected outcomes are generated before the robot sees them.
 
+![A real scan from the test set with the fields the robot read, next to the measured results](docs/overview.png)
+
 > 🇫🇷 Documentation projet en français : [PDD](docs/PDD.md) (définition du processus, règles de gestion,
 > faisabilité) · [SDD](docs/SDD.md) (conception) · [Runbook support N2](docs/runbook-support-n2.md).
 
