@@ -1,0 +1,16 @@
+{
+  "_comment": "Equivalent of the REFramework Data/Config.xlsx (Settings + Constants sheets). Assets that would live in Orchestrator are marked asset:.",
+  "OrchestratorURL": "http://127.0.0.1:8090",
+  "ERP_URL": "http://127.0.0.1:8091",
+  "QueueName": "FACTURES_FOURNISSEURS",
+  "QueueMaxRetryNumber": 2,
+  "MaxConsecutiveSystemExceptions": 5,
+  "ErpTimeoutSeconds": 2.0,
+  "OcrLanguage": "fra",
+  "MinFieldConfidence": 50,
+  "PoAmountTolerancePct": 1.0,
+  "VatRate": 0.20,
+  "InProgressTimeoutSeconds": 300,
+  "AiFallbackModel": "qwen2.5:7b",
+  "OllamaURL": "http://127.0.0.1:11434"
+}

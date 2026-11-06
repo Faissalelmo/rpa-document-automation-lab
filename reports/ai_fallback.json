@@ -1,0 +1,1052 @@
+{
+  "documents": 100,
+  "robots": 2,
+  "outcome_accuracy_pct": 91.0,
+  "straight_through": {
+    "expected": 60,
+    "booked": 57,
+    "rate_pct": 95.0
+  },
+  "business_exceptions": {
+    "injected": 40,
+    "stopped_before_booking": 40,
+    "stopped_with_the_right_reason": 34,
+    "wrongly_booked": 0
+  },
+  "false_rejections": {
+    "count": 3,
+    "reasons": {
+      "SYSTEM_FAILED": 3
+    }
+  },
+  "system_exceptions": {
+    "application_exception_items": 38,
+    "documents_affected": 28,
+    "recovered_by_auto_retry": 25,
+    "still_failed_after_retries": 3,
+    "lost_responses_recovered_without_double_booking": 3,
+    "erp_chaos_injected": {
+      "503": 23,
+      "lost_response": 3,
+      "slow": 12
+    }
+  },
+  "erp": {
+    "booked_by_robot": 57,
+    "double_bookings": 0
+  },
+  "dispatcher": {
+    "queued": 100,
+    "resent_files": 4,
+    "rejected_as_duplicate_reference": 4
+  },
+  "field_accuracy_pct": {
+    "supplier_siret": 100.0,
+    "invoice_number": 99.0,
+    "invoice_date": 96.0,
+    "po_number": 99.0,
+    "total_ht": 100.0,
+    "tva": 100.0,
+    "total_ttc": 100.0
+  },
+  "field_accuracy_by_variant_pct": {
+    "digital": 100.0,
+    "hard": 94.6,
+    "scan": 98.9
+  },
+  "field_accuracy_by_layout_pct": {
+    "A": 100.0,
+    "B": 98.2,
+    "C": 99.0,
+    "D": 100.0
+  },
+  "confusion": {
+    "BE_DUPLICATE_INVOICE": {
+      "BE_DUPLICATE_INVOICE": 7,
+      "BE_EXTRACTION_REVIEW": 1
+    },
+    "BE_PO_AMOUNT_MISMATCH": {
+      "BE_PO_AMOUNT_MISMATCH": 8
+    },
+    "BE_PO_NOT_FOUND": {
+      "BE_PO_NOT_FOUND": 8
+    },
+    "BE_TOTAL_MISMATCH": {
+      "BE_EXTRACTION_REVIEW": 5,
+      "BE_TOTAL_MISMATCH": 3
+    },
+    "BE_UNKNOWN_SUPPLIER": {
+      "BE_UNKNOWN_SUPPLIER": 8
+    },
+    "OK": {
+      "OK": 57,
+      "SYSTEM_FAILED": 3
+    }
+  },
+  "timing": {
+    "wall_seconds": 133.4,
+    "avg_transaction_seconds": 1.921,
+    "documents_per_minute": 45.0
+  },
+  "per_robot": [
+    {
+      "robot": "ROBOT-01",
+      "Successful": 33,
+      "BusinessException": 22,
+      "ApplicationException": 17,
+      "seconds": 132.58
+    },
+    {
+      "robot": "ROBOT-02",
+      "Successful": 24,
+      "BusinessException": 18,
+      "ApplicationException": 21,
+      "seconds": 129.18
+    }
+  ],
+  "per_document": [
+    {
+      "file": "facture_000.jpg",
+      "variant": "scan",
+      "layout": "B",
+      "expected": "BE_UNKNOWN_SUPPLIER",
+      "actual": "BE_UNKNOWN_SUPPLIER",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_001.png",
+      "variant": "digital",
+      "layout": "A",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "method": "rules"
+    },
+    {
+      "file": "facture_002.png",
+      "variant": "digital",
+      "layout": "B",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "method": "rules"
+    },
+    {
+      "file": "facture_003.jpg",
+      "variant": "scan",
+      "layout": "C",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_004.png",
+      "variant": "digital",
+      "layout": "A",
+      "expected": "OK",
+      "actual": "SYSTEM_FAILED",
+      "attempts": 3,
+      "method": "rules"
+    },
+    {
+      "file": "facture_005.png",
+      "variant": "digital",
+      "layout": "A",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "method": "rules"
+    },
+    {
+      "file": "facture_006.png",
+      "variant": "digital",
+      "layout": "B",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_007.png",
+      "variant": "digital",
+      "layout": "C",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "method": "rules"
+    },
+    {
+      "file": "facture_008.png",
+      "variant": "digital",
+      "layout": "C",
+      "expected": "BE_PO_NOT_FOUND",
+      "actual": "BE_PO_NOT_FOUND",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_009.png",
+      "variant": "digital",
+      "layout": "A",
+      "expected": "BE_PO_AMOUNT_MISMATCH",
+      "actual": "BE_PO_AMOUNT_MISMATCH",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_010.png",
+      "variant": "digital",
+      "layout": "C",
+      "expected": "BE_PO_AMOUNT_MISMATCH",
+      "actual": "BE_PO_AMOUNT_MISMATCH",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_011.jpg",
+      "variant": "scan",
+      "layout": "D",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules+llm"
+    },
+    {
+      "file": "facture_012.png",
+      "variant": "digital",
+      "layout": "C",
+      "expected": "BE_TOTAL_MISMATCH",
+      "actual": "BE_EXTRACTION_REVIEW",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_013.jpg",
+      "variant": "scan",
+      "layout": "D",
+      "expected": "BE_DUPLICATE_INVOICE",
+      "actual": "BE_DUPLICATE_INVOICE",
+      "attempts": 1,
+      "method": "rules+llm"
+    },
+    {
+      "file": "facture_014.jpg",
+      "variant": "scan",
+      "layout": "D",
+      "expected": "BE_DUPLICATE_INVOICE",
+      "actual": "BE_DUPLICATE_INVOICE",
+      "attempts": 1,
+      "method": "rules+llm"
+    },
+    {
+      "file": "facture_015.png",
+      "variant": "digital",
+      "layout": "D",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules+llm"
+    },
+    {
+      "file": "facture_016.png",
+      "variant": "digital",
+      "layout": "C",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 3,
+      "method": "rules"
+    },
+    {
+      "file": "facture_017.jpg",
+      "variant": "scan",
+      "layout": "A",
+      "expected": "BE_PO_AMOUNT_MISMATCH",
+      "actual": "BE_PO_AMOUNT_MISMATCH",
+      "attempts": 2,
+      "method": "rules"
+    },
+    {
+      "file": "facture_018.png",
+      "variant": "digital",
+      "layout": "A",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_019.png",
+      "variant": "digital",
+      "layout": "D",
+      "expected": "BE_PO_AMOUNT_MISMATCH",
+      "actual": "BE_PO_AMOUNT_MISMATCH",
+      "attempts": 1,
+      "method": "rules+llm"
+    },
+    {
+      "file": "facture_020.png",
+      "variant": "digital",
+      "layout": "B",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_021.png",
+      "variant": "digital",
+      "layout": "B",
+      "expected": "BE_DUPLICATE_INVOICE",
+      "actual": "BE_DUPLICATE_INVOICE",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_022.png",
+      "variant": "digital",
+      "layout": "D",
+      "expected": "BE_TOTAL_MISMATCH",
+      "actual": "BE_TOTAL_MISMATCH",
+      "attempts": 1,
+      "method": "rules+llm"
+    },
+    {
+      "file": "facture_023.png",
+      "variant": "digital",
+      "layout": "A",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "method": "rules"
+    },
+    {
+      "file": "facture_024.jpg",
+      "variant": "hard",
+      "layout": "C",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules+llm"
+    },
+    {
+      "file": "facture_025.png",
+      "variant": "digital",
+      "layout": "B",
+      "expected": "BE_UNKNOWN_SUPPLIER",
+      "actual": "BE_UNKNOWN_SUPPLIER",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_026.jpg",
+      "variant": "scan",
+      "layout": "B",
+      "expected": "BE_TOTAL_MISMATCH",
+      "actual": "BE_EXTRACTION_REVIEW",
+      "attempts": 1,
+      "method": "rules+llm"
+    },
+    {
+      "file": "facture_027.png",
+      "variant": "digital",
+      "layout": "C",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_028.png",
+      "variant": "digital",
+      "layout": "C",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_029.jpg",
+      "variant": "scan",
+      "layout": "A",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_030.jpg",
+      "variant": "scan",
+      "layout": "B",
+      "expected": "BE_DUPLICATE_INVOICE",
+      "actual": "BE_DUPLICATE_INVOICE",
+      "attempts": 2,
+      "method": "rules"
+    },
+    {
+      "file": "facture_031.png",
+      "variant": "digital",
+      "layout": "A",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "method": "rules"
+    },
+    {
+      "file": "facture_032.png",
+      "variant": "digital",
+      "layout": "A",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_033.jpg",
+      "variant": "scan",
+      "layout": "B",
+      "expected": "BE_PO_NOT_FOUND",
+      "actual": "BE_PO_NOT_FOUND",
+      "attempts": 2,
+      "method": "rules"
+    },
+    {
+      "file": "facture_034.png",
+      "variant": "digital",
+      "layout": "B",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_035.png",
+      "variant": "digital",
+      "layout": "C",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_036.jpg",
+      "variant": "scan",
+      "layout": "A",
+      "expected": "BE_TOTAL_MISMATCH",
+      "actual": "BE_EXTRACTION_REVIEW",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_037.png",
+      "variant": "digital",
+      "layout": "A",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_038.jpg",
+      "variant": "scan",
+      "layout": "D",
+      "expected": "BE_PO_NOT_FOUND",
+      "actual": "BE_PO_NOT_FOUND",
+      "attempts": 1,
+      "method": "rules+llm"
+    },
+    {
+      "file": "facture_039.jpg",
+      "variant": "hard",
+      "layout": "B",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules+llm"
+    },
+    {
+      "file": "facture_040.jpg",
+      "variant": "scan",
+      "layout": "B",
+      "expected": "BE_UNKNOWN_SUPPLIER",
+      "actual": "BE_UNKNOWN_SUPPLIER",
+      "attempts": 1,
+      "method": "rules+llm"
+    },
+    {
+      "file": "facture_041.png",
+      "variant": "digital",
+      "layout": "A",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "method": "rules"
+    },
+    {
+      "file": "facture_042.jpg",
+      "variant": "scan",
+      "layout": "C",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "method": "rules"
+    },
+    {
+      "file": "facture_043.png",
+      "variant": "digital",
+      "layout": "B",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 3,
+      "method": "rules"
+    },
+    {
+      "file": "facture_044.png",
+      "variant": "digital",
+      "layout": "B",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "method": "rules"
+    },
+    {
+      "file": "facture_045.jpg",
+      "variant": "hard",
+      "layout": "C",
+      "expected": "BE_DUPLICATE_INVOICE",
+      "actual": "BE_EXTRACTION_REVIEW",
+      "attempts": 1,
+      "method": "rules+llm"
+    },
+    {
+      "file": "facture_046.jpg",
+      "variant": "scan",
+      "layout": "B",
+      "expected": "OK",
+      "actual": "SYSTEM_FAILED",
+      "attempts": 3,
+      "method": "rules"
+    },
+    {
+      "file": "facture_047.png",
+      "variant": "digital",
+      "layout": "B",
+      "expected": "BE_UNKNOWN_SUPPLIER",
+      "actual": "BE_UNKNOWN_SUPPLIER",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_048.jpg",
+      "variant": "hard",
+      "layout": "B",
+      "expected": "BE_PO_AMOUNT_MISMATCH",
+      "actual": "BE_PO_AMOUNT_MISMATCH",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_049.jpg",
+      "variant": "scan",
+      "layout": "C",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_050.jpg",
+      "variant": "scan",
+      "layout": "B",
+      "expected": "BE_TOTAL_MISMATCH",
+      "actual": "BE_EXTRACTION_REVIEW",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_051.png",
+      "variant": "digital",
+      "layout": "A",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_052.png",
+      "variant": "digital",
+      "layout": "B",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_053.jpg",
+      "variant": "scan",
+      "layout": "D",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 3,
+      "method": "rules+llm"
+    },
+    {
+      "file": "facture_054.png",
+      "variant": "digital",
+      "layout": "A",
+      "expected": "BE_PO_NOT_FOUND",
+      "actual": "BE_PO_NOT_FOUND",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_055.png",
+      "variant": "digital",
+      "layout": "B",
+      "expected": "BE_UNKNOWN_SUPPLIER",
+      "actual": "BE_UNKNOWN_SUPPLIER",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_056.jpg",
+      "variant": "scan",
+      "layout": "B",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "method": "rules"
+    },
+    {
+      "file": "facture_057.png",
+      "variant": "digital",
+      "layout": "A",
+      "expected": "BE_DUPLICATE_INVOICE",
+      "actual": "BE_DUPLICATE_INVOICE",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_058.jpg",
+      "variant": "scan",
+      "layout": "A",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_059.jpg",
+      "variant": "hard",
+      "layout": "D",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules+llm"
+    },
+    {
+      "file": "facture_060.jpg",
+      "variant": "hard",
+      "layout": "B",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_061.png",
+      "variant": "digital",
+      "layout": "D",
+      "expected": "BE_PO_AMOUNT_MISMATCH",
+      "actual": "BE_PO_AMOUNT_MISMATCH",
+      "attempts": 1,
+      "method": "rules+llm"
+    },
+    {
+      "file": "facture_062.png",
+      "variant": "digital",
+      "layout": "A",
+      "expected": "BE_PO_AMOUNT_MISMATCH",
+      "actual": "BE_PO_AMOUNT_MISMATCH",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_063.jpg",
+      "variant": "scan",
+      "layout": "C",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_064.png",
+      "variant": "digital",
+      "layout": "A",
+      "expected": "BE_PO_NOT_FOUND",
+      "actual": "BE_PO_NOT_FOUND",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_065.png",
+      "variant": "digital",
+      "layout": "C",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "method": "rules"
+    },
+    {
+      "file": "facture_066.jpg",
+      "variant": "scan",
+      "layout": "A",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_067.png",
+      "variant": "digital",
+      "layout": "A",
+      "expected": "BE_DUPLICATE_INVOICE",
+      "actual": "BE_DUPLICATE_INVOICE",
+      "attempts": 2,
+      "method": "rules"
+    },
+    {
+      "file": "facture_068.jpg",
+      "variant": "scan",
+      "layout": "C",
+      "expected": "BE_TOTAL_MISMATCH",
+      "actual": "BE_TOTAL_MISMATCH",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_069.jpg",
+      "variant": "scan",
+      "layout": "A",
+      "expected": "BE_PO_NOT_FOUND",
+      "actual": "BE_PO_NOT_FOUND",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_070.png",
+      "variant": "digital",
+      "layout": "C",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_071.jpg",
+      "variant": "scan",
+      "layout": "C",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_072.jpg",
+      "variant": "scan",
+      "layout": "A",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "method": "rules"
+    },
+    {
+      "file": "facture_073.jpg",
+      "variant": "scan",
+      "layout": "C",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_074.png",
+      "variant": "digital",
+      "layout": "B",
+      "expected": "BE_UNKNOWN_SUPPLIER",
+      "actual": "BE_UNKNOWN_SUPPLIER",
+      "attempts": 2,
+      "method": "rules"
+    },
+    {
+      "file": "facture_075.jpg",
+      "variant": "hard",
+      "layout": "A",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_076.jpg",
+      "variant": "scan",
+      "layout": "B",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "method": "rules+llm"
+    },
+    {
+      "file": "facture_077.png",
+      "variant": "digital",
+      "layout": "C",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_078.png",
+      "variant": "digital",
+      "layout": "C",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_079.png",
+      "variant": "digital",
+      "layout": "B",
+      "expected": "BE_PO_NOT_FOUND",
+      "actual": "BE_PO_NOT_FOUND",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_080.jpg",
+      "variant": "scan",
+      "layout": "B",
+      "expected": "BE_UNKNOWN_SUPPLIER",
+      "actual": "BE_UNKNOWN_SUPPLIER",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_081.jpg",
+      "variant": "scan",
+      "layout": "A",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "method": "rules"
+    },
+    {
+      "file": "facture_082.jpg",
+      "variant": "scan",
+      "layout": "A",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_083.png",
+      "variant": "digital",
+      "layout": "C",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_084.png",
+      "variant": "digital",
+      "layout": "C",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "method": "rules"
+    },
+    {
+      "file": "facture_085.jpg",
+      "variant": "scan",
+      "layout": "C",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_086.jpg",
+      "variant": "scan",
+      "layout": "B",
+      "expected": "BE_DUPLICATE_INVOICE",
+      "actual": "BE_DUPLICATE_INVOICE",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_087.png",
+      "variant": "digital",
+      "layout": "C",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_088.png",
+      "variant": "digital",
+      "layout": "B",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_089.png",
+      "variant": "digital",
+      "layout": "B",
+      "expected": "BE_PO_AMOUNT_MISMATCH",
+      "actual": "BE_PO_AMOUNT_MISMATCH",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_090.png",
+      "variant": "digital",
+      "layout": "C",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 3,
+      "method": "rules"
+    },
+    {
+      "file": "facture_091.jpg",
+      "variant": "hard",
+      "layout": "A",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_092.jpg",
+      "variant": "scan",
+      "layout": "B",
+      "expected": "OK",
+      "actual": "SYSTEM_FAILED",
+      "attempts": 3,
+      "method": "rules"
+    },
+    {
+      "file": "facture_093.jpg",
+      "variant": "scan",
+      "layout": "B",
+      "expected": "BE_UNKNOWN_SUPPLIER",
+      "actual": "BE_UNKNOWN_SUPPLIER",
+      "attempts": 2,
+      "method": "rules"
+    },
+    {
+      "file": "facture_094.png",
+      "variant": "digital",
+      "layout": "C",
+      "expected": "BE_TOTAL_MISMATCH",
+      "actual": "BE_EXTRACTION_REVIEW",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_095.png",
+      "variant": "digital",
+      "layout": "C",
+      "expected": "BE_TOTAL_MISMATCH",
+      "actual": "BE_TOTAL_MISMATCH",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_096.jpg",
+      "variant": "scan",
+      "layout": "D",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules+llm"
+    },
+    {
+      "file": "facture_097.png",
+      "variant": "digital",
+      "layout": "A",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_098.jpg",
+      "variant": "scan",
+      "layout": "B",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "method": "rules"
+    },
+    {
+      "file": "facture_099.jpg",
+      "variant": "scan",
+      "layout": "A",
+      "expected": "BE_PO_NOT_FOUND",
+      "actual": "BE_PO_NOT_FOUND",
+      "attempts": 1,
+      "method": "rules"
+    }
+  ],
+  "l2_recovery": {
+    "health_check_exit_code_before": 1,
+    "items_retried": 3,
+    "health_check_exit_code_after": 0,
+    "straight_through_after": {
+      "expected": 60,
+      "booked": 60,
+      "rate_pct": 100.0
+    },
+    "system_exceptions_after": {
+      "application_exception_items": 38,
+      "documents_affected": 28,
+      "recovered_by_auto_retry": 28,
+      "still_failed_after_retries": 0,
+      "lost_responses_recovered_without_double_booking": 3,
+      "erp_chaos_injected": {
+        "503": 23,
+        "lost_response": 3,
+        "slow": 12
+      }
+    },
+    "erp_after": {
+      "booked_by_robot": 60,
+      "double_bookings": 0
+    },
+    "wrongly_booked_after": 0,
+    "outcome_accuracy_pct_after": 94.0,
+    "straight_through_before": {
+      "expected": 60,
+      "booked": 57,
+      "rate_pct": 95.0
+    }
+  },
+  "run": {
+    "name": "ai_fallback",
+    "chaos": {
+      "RPA_ERP_FAILURE_RATE": "0.06",
+      "RPA_ERP_SLOW_RATE": "0.03",
+      "RPA_ERP_LOST_RESPONSE": "0.08"
+    },
+    "ai_fallback": true,
+    "ai_model": "qwen2.5:7b"
+  }
+}
