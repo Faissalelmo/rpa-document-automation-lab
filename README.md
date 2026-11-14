@@ -12,6 +12,10 @@ project uses:
 All of it runs on a laptop with free tools. **Every figure below comes from a measured run against ground
 truth.** The documents and their expected outcomes are generated before the robot sees them.
 
+The process exists twice: first in Python (runs anywhere), then as **real UiPath robots** — a Dispatcher and a
+REFramework Performer built in UiPath Studio 26.10 and run against a UiPath Orchestrator queue. Both process
+the same 100 invoices under the same ERP failures; see [The UiPath version](#the-uipath-version).
+
 ![A real scan from the test set with the fields the robot read, next to the measured results](docs/overview.png)
 
 > 🇫🇷 Documentation projet en français : [PDD](docs/PDD.md) (définition du processus, règles de gestion,
@@ -30,7 +34,8 @@ report *wrongly booked* separately from everything else.
 
 | What the job asks for | Where it is |
 |---|---|
-| UiPath Orchestrator, queues, exception handling | [`orchestrator.py`](rpa_lab/orchestrator.py) reproduces the queue contract (OData endpoint names, unique reference, auto-retry on *Application* exceptions only, *Abandoned*) — 7 tests |
+| UiPath Studio, REFramework, Orchestrator | [`uipath/`](uipath): Dispatcher + REFramework Performer (VB.NET), real Orchestrator queue with unique reference and auto-retry — [measured](#the-uipath-version) |
+| Orchestrator queue contract, exception handling | [`orchestrator.py`](rpa_lab/orchestrator.py) reproduces the queue contract (OData endpoint names, unique reference, auto-retry on *Application* exceptions only, *Abandoned*) — 7 tests |
 | REFramework, new robots | [`performer.py`](rpa_lab/performer.py): Init → Get Transaction → Process → Set Status → End, restart on system exception, stop after N consecutive |
 | Maintain / make robots reliable | Idempotent booking survives lost ERP responses; chaos injection proves it ([SDD §4](docs/SDD.md#4-idempotence--le-point-délicat)) |
 | Recette and fixing anomalies | `run_lab.py` scores every run against ground truth; the confusion matrix shows which rule fired for which document |
@@ -111,6 +116,52 @@ Full numbers, the confusion matrix and the per-document trace: [`reports/baselin
 - The documents are synthetic. Real scans are messier, so treat the accuracy figures as a property of this
   test set, not a promise.
 
+## The UiPath version
+
+The same process, built in **UiPath Studio 26.10** (VB.NET) and run on a local robot connected to **UiPath
+Orchestrator** (Automation Cloud):
+
+- [`uipath/Solution/InvoiceDispatcher`](uipath/Solution/InvoiceDispatcher/Main.xaml) — scans the inbox,
+  computes the SHA-256 of each file and calls *Add Queue Item* on the `Invoices` queue with the hash as
+  *Reference*. The queue enforces unique references, so a re-sent scan is refused by Orchestrator
+  (`409`, error 1016) and counted; any other error stops the run.
+- [`uipath/InvoicePerformer`](uipath/InvoicePerformer) — the official **REFramework** template.
+  [`Process.xaml`](uipath/InvoicePerformer/Framework/Process.xaml) reads the invoice, applies the rules
+  RG-01 to RG-07 and throws a `BusinessRuleException` with the same codes as the Python robot
+  (`BE_EXTRACTION_REVIEW`, `BE_TOTAL_MISMATCH`, `BE_UNKNOWN_SUPPLIER`, `BE_DUPLICATE_INVOICE`,
+  `BE_PO_NOT_FOUND`, `BE_PO_AMOUNT_MISMATCH`). ERP calls use *HTTP Request* with no built-in retry, so a 503
+  or timeout becomes a system exception and the **queue's auto-retry** re-runs the item; the booking carries
+  an `Idempotency-Key`, so a retry after a lost response finds the booking instead of making a second one.
+- OCR is **not** UiPath Document Understanding: the robot calls the lab's Tesseract reader through
+  [`rpa_lab/extract_api.py`](rpa_lab/extract_api.py). The business rules all live in the UiPath workflow.
+
+**Dispatcher, measured:** first run `Added: 100 | Duplicates rejected: 4` (the 4 re-sent scans), second run
+on the same folder `Added: 0 | Duplicates rejected: 104`.
+
+**Performer, measured** — 100 queue items, 1 robot, same ERP chaos as above, 173 s
+([`reports/uipath_performer.json`](reports/uipath_performer.json), scored from the robot's execution log by
+[`scripts/score_uipath_run.py`](scripts/score_uipath_run.py) with the definitions of `evaluate.py`):
+
+| | Python, rules only | **UiPath REFramework** |
+|---|---|---|
+| Invalid invoices **wrongly booked** | 0 | **0** |
+| Invalid invoices stopped before booking | 40/40 | **40/40** |
+| …stopped with the exact reason | 27 | **27** |
+| Valid invoices booked straight-through | 50/60 (83.3 %) | **51/60 (85.0 %)** |
+| Final outcome = expected outcome | 77.0 % | **78.0 %** |
+| Documents hit by system exceptions, recovered by auto-retry | 22/24 | **23/24** |
+| Lost ERP responses resolved without re-booking | 7 | **7** |
+| Double bookings in the ERP | 0 | **0** |
+
+The one unrecovered document (`facture_065.png`) failed on all three attempts; on the last one the booking
+committed and its response was lost. Orchestrator therefore shows it *Failed* while the ERP holds it, booked
+once. One more retry closes it through the idempotency key — the L2 path above.
+
+To reproduce: start the ERP (with the chaos variables) and `uvicorn --factory rpa_lab.extract_api:create_app
+--port 8092`, run the Dispatcher then the Performer (Studio, or `uipcli package pack` +
+`UiRobot execute --file <nupkg> --folder Shared`), then
+`python scripts/score_uipath_run.py <Execution.log> <jobId>`.
+
 ## Run it
 
 Requirements: Python 3.11+, [Tesseract 5](https://github.com/UB-Mannheim/tesseract/wiki) with the French
@@ -146,6 +197,10 @@ rpa_lab/
   erp.py                fake ERP with chaos and idempotency
   evaluate.py           scoring against ground truth
   exceptions_report.py  Excel report for the business
+  extract_api.py        OCR behind HTTP, called by the UiPath Performer
+uipath/
+  Solution/InvoiceDispatcher   UiPath Dispatcher (Studio 26.10, VB.NET)
+  InvoicePerformer             UiPath REFramework Performer
 ops/                    PowerShell L2 support scripts
 docs/                   PDD, SDD, runbook (FR), UiPath / Power Automate mapping
 synthetic/generate.py   test-set generator

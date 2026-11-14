@@ -1,0 +1,10 @@
+{
+  "SolutionId": "30f0b8b1-0dc8-4c02-9792-10fc3a070de5",
+  "Projects": [
+    {
+      "Id": "1023f929-f122-493c-84f2-7fbec1d2830a",
+      "Type": "Process",
+      "ProjectRelativePath": "InvoiceDispatcher/project.uiproj"
+    }
+  ]
+}

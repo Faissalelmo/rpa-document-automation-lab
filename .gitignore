@@ -2,5 +2,10 @@
 __pycache__/
 *.pyc
 .pytest_cache/
-data/
+/data/
 .tessdata/
+# UiPath Studio: generated caches and per-user state
+uipath/**/.local/
+uipath/**/userProfile/
+*_UiCache.zip
+.sw-path-marker

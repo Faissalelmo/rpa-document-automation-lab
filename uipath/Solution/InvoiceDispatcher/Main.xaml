@@ -1,0 +1,125 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Main"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib"
+ xmlns:ui="http://schemas.uipath.com/workflow/activities"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="26">
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Activities</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Security.Cryptography</x:String>
+      <x:String>System.Text</x:String>
+      <x:String>UiPath.Platform.ResourceHandling</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>UiPath.Shared.Activities</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>Newtonsoft.Json</x:String>
+      <x:String>Newtonsoft.Json.Linq</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="19">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Net.Primitives</AssemblyReference>
+      <AssemblyReference>System.Runtime.InteropServices</AssemblyReference>
+      <AssemblyReference>Newtonsoft.Json</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Runtime</AssemblyReference>
+      <AssemblyReference>netstandard</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
+      <AssemblyReference>System.Security.Cryptography</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>UiPath.Platform</AssemblyReference>
+      <AssemblyReference>System.Reflection.Primitives</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Invoice Dispatcher" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Default="C:\Users\ASUS\Desktop\Projects\rpa-document-automation-lab\data\inbox" Name="inboxFolder" />
+      <Variable x:TypeArguments="x:Int32" Default="0" Name="added" />
+      <Variable x:TypeArguments="x:Int32" Default="0" Name="duplicates" />
+      <Variable x:TypeArguments="x:String" Name="fileHash" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:ManualTrigger Result="{x:Null}" DisplayName="Manual Trigger" sap2010:WorkflowViewState.IdRef="ManualTrigger_1" />
+    <ui:LogMessage DisplayName="Log start" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Dispatcher started on inbox: &quot; &amp; inboxFolder]" />
+    <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each scanned invoice" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[Directory.GetFiles(inboxFolder).Where(Function(f) New String() {&quot;.png&quot;, &quot;.jpg&quot;, &quot;.jpeg&quot;, &quot;.tif&quot;, &quot;.tiff&quot;}.Contains(Path.GetExtension(f).ToLowerInvariant())).OrderBy(Function(f) f, StringComparer.Ordinal).ToArray()]">
+      <ui:ForEach.Body>
+        <ActivityAction x:TypeArguments="x:String">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:String" Name="filePath" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_2">
+            <Assign x:TypeArguments="x:String" DisplayName="SHA-256 of file content" sap2010:WorkflowViewState.IdRef="Assign_1" To="[fileHash]" Value="[Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(filePath))).ToLowerInvariant()]" />
+            <TryCatch DisplayName="Try Catch" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+              <TryCatch.Try>
+                <Sequence DisplayName="Try" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                  <ui:AddQueueItem TimeoutMS="{x:Null}" DisplayName="Add Queue Item" sap2010:WorkflowViewState.IdRef="AddQueueItem_1" Priority="Normal" QueueType="Invoices" Reference="[fileHash.Substring(0, 32)]">
+                    <ui:AddQueueItem.ItemInformation>
+                      <InArgument x:TypeArguments="x:String" x:Key="FilePath">[filePath]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="FileName">[Path.GetFileName(filePath)]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="ReceivedAt">[DateTime.UtcNow.ToString("o")]</InArgument>
+                    </ui:AddQueueItem.ItemInformation>
+                  </ui:AddQueueItem>
+                  <Assign x:TypeArguments="x:Int32" DisplayName="Count added" sap2010:WorkflowViewState.IdRef="Assign_2" To="[added]" Value="[added + 1]" />
+                </Sequence>
+              </TryCatch.Try>
+              <TryCatch.Catches>
+                <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch_1">
+                  <ActivityAction x:TypeArguments="s:Exception">
+                    <ActivityAction.Argument>
+                      <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                    </ActivityAction.Argument>
+                    <If Condition="[exception.Message.IndexOf(&quot;duplicate&quot;, StringComparison.OrdinalIgnoreCase) &gt;= 0 OrElse exception.Message.IndexOf(&quot;already exists&quot;, StringComparison.OrdinalIgnoreCase) &gt;= 0 OrElse exception.Message.Contains(&quot;1016&quot;)]" DisplayName="Duplicate reference?" sap2010:WorkflowViewState.IdRef="If_1">
+                      <If.Then>
+                        <Sequence DisplayName="Re-sent copy: skip it" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                          <Assign x:TypeArguments="x:Int32" DisplayName="Count duplicate" sap2010:WorkflowViewState.IdRef="Assign_3" To="[duplicates]" Value="[duplicates + 1]" />
+                          <ui:LogMessage DisplayName="Log duplicate" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Warn" Message="[&quot;Duplicate rejected: &quot; &amp; Path.GetFileName(filePath)]" />
+                        </Sequence>
+                      </If.Then>
+                      <If.Else>
+                        <Rethrow DisplayName="Any other error: fail loudly" sap2010:WorkflowViewState.IdRef="Rethrow_1" />
+                      </If.Else>
+                    </If>
+                  </ActivityAction>
+                </Catch>
+              </TryCatch.Catches>
+            </TryCatch>
+          </Sequence>
+        </ActivityAction>
+      </ui:ForEach.Body>
+    </ui:ForEach>
+    <ui:LogMessage DisplayName="Log summary" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Added: &quot; &amp; added.ToString &amp; &quot; | Duplicates rejected: &quot; &amp; duplicates.ToString]" />
+  </Sequence>
+</Activity>

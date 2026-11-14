@@ -1,0 +1,269 @@
+﻿<Activity mc:Ignorable="sap sap2010" x:Class="Process" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uwah="clr-namespace:UiPath.Web.Activities.Http;assembly=UiPath.Web.Activities" xmlns:njl="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json" xmlns:uwahm="clr-namespace:UiPath.Web.Activities.Http.Models;assembly=UiPath.Web.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property sap2010:Annotation.AnnotationText="Transaction item to be processed." Name="in_TransactionItem" Type="InArgument(ui:QueueItem)" />
+    <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+  </x:Members>
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>818.4,454.4</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>ProcessTransaction_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="50">
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Runtime.InteropServices</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.Windows.Forms</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>UiPath.Web.Activities.Http.Models</x:String><x:String>Newtonsoft.Json.Linq</x:String>
+      <x:String>System.Security</x:String>
+      <x:String>System.Net</x:String>
+      <x:String>UiPath.Platform.ResourceHandling</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>UiPath.Web.Activities.Http</x:String>
+      <x:String>UiPath.Sdk.Activities</x:String>
+      <x:String>UiPath.Sdk.Activities.DependencyInjection.Contracts</x:String>
+      <x:String>UiPath.Sdk.Activities.DependencyInjection</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="80">
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
+      <AssemblyReference>System.Console</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>System.Security.Permissions</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.Windows.Forms</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>UiPath.Workflow</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>UiPath.Web.Activities</AssemblyReference><AssemblyReference>Newtonsoft.Json</AssemblyReference>
+      <AssemblyReference>System.Runtime.InteropServices</AssemblyReference>
+      <AssemblyReference>System.Net.Primitives</AssemblyReference>
+      <AssemblyReference>System.Net.HttpListener</AssemblyReference>
+      <AssemblyReference>System.Net.WebProxy</AssemblyReference>
+      <AssemblyReference>System.Net.NameResolution</AssemblyReference>
+      <AssemblyReference>System.Net.WebHeaderCollection</AssemblyReference>
+      <AssemblyReference>System.Net.WebClient</AssemblyReference>
+      <AssemblyReference>System.Net.Requests</AssemblyReference>
+      <AssemblyReference>UiPath.Platform</AssemblyReference>
+      <AssemblyReference>System.Reflection.DispatchProxy</AssemblyReference>
+      <AssemblyReference>System.Reflection.TypeExtensions</AssemblyReference>
+      <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+    <Sequence sap2010:Annotation.AnnotationText="One supplier invoice per transaction: read it through the extraction service, apply the business rules, check the ERP master data, book it idempotently.&#xA;Bad data throws BusinessRuleException (not retried, routed to a human). Any other exception (ERP 5xx, timeout, extraction service down) propagates as a system exception: the framework re-initialises and the queue's auto-retry re-runs the item." DisplayName="Process" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="filePath" />
+      <Variable x:TypeArguments="x:String" Name="erpUrl" />
+      <Variable x:TypeArguments="x:Int32" Name="erpTimeoutMs" />
+      <Variable x:TypeArguments="x:Double" Name="minConf" />
+      <Variable x:TypeArguments="uwahm:HttpResponseSummary" Name="resp" />
+      <Variable x:TypeArguments="njl:JObject" Name="extraction" />
+      <Variable x:TypeArguments="njl:JObject" Name="fields" />
+      <Variable x:TypeArguments="njl:JObject" Name="conf" />
+      <Variable x:TypeArguments="x:String" Name="siret" />
+      <Variable x:TypeArguments="x:String" Name="invoiceNumber" />
+      <Variable x:TypeArguments="x:String" Name="poNumber" />
+      <Variable x:TypeArguments="x:Double" Name="ht" />
+      <Variable x:TypeArguments="x:Double" Name="tva" />
+      <Variable x:TypeArguments="x:Double" Name="ttc" />
+      <Variable x:TypeArguments="x:String" Name="invalidFields" />
+      <Variable x:TypeArguments="x:String" Name="lowConfidence" />
+      <Variable x:TypeArguments="njl:JArray" Name="existing" />
+      <Variable x:TypeArguments="x:Int32" Name="bookedByThisItem" />
+      <Variable x:TypeArguments="njl:JObject" Name="po" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:LogMessage DisplayName="Log Message Process Start" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Started Process&quot;]" />
+    <Assign x:TypeArguments="x:String" DisplayName="Assign filePath" sap2010:WorkflowViewState.IdRef="Assign_1" To="[filePath]" Value="[in_TransactionItem.SpecificContent(&quot;FilePath&quot;).ToString]" />
+    <Assign x:TypeArguments="x:String" DisplayName="Assign erpUrl" sap2010:WorkflowViewState.IdRef="Assign_2" To="[erpUrl]" Value="[in_Config(&quot;ErpApiUrl&quot;).ToString.TrimEnd(&quot;/&quot;c)]" />
+    <Assign x:TypeArguments="x:Int32" DisplayName="Assign erpTimeoutMs" sap2010:WorkflowViewState.IdRef="Assign_3" To="[erpTimeoutMs]" Value="[CInt(in_Config(&quot;ErpTimeoutMs&quot;))]" />
+    <Assign x:TypeArguments="x:Double" DisplayName="Assign minConf" sap2010:WorkflowViewState.IdRef="Assign_4" To="[minConf]" Value="[CDbl(in_Config(&quot;MinFieldConfidence&quot;))]" />
+    <If Condition="[Not File.Exists(filePath)]" DisplayName="If the scan is missing" sap2010:WorkflowViewState.IdRef="If_1">
+      <If.Then>
+        <Throw DisplayName="Throw system exception: input file not found" Exception="[New FileNotFoundException(&quot;Input file not found: &quot; &amp; filePath)]" sap2010:WorkflowViewState.IdRef="Throw_1" />
+      </If.Then>
+    </If>
+    <!-- 1. Read the document through the extraction service -->
+    <uwah:NetHttpRequest AuthenticationType="None" ContinueOnError="False" DisplayName="HTTP Request extract invoice" EnableCookies="False" FollowRedirects="True" sap2010:WorkflowViewState.IdRef="NetHttpRequest_1" Method="POST" RequestBodyType="Text" RequestUrl="[in_Config(&quot;ExtractApiUrl&quot;).ToString.TrimEnd(&quot;/&quot;c) &amp; &quot;/extract&quot;]" Result="[resp]" RetryPolicyType="None" SaveRawRequestResponse="False" SaveResponseAsFile="False" TextPayload="[New JObject(New JProperty(&quot;path&quot;, filePath)).ToString(Newtonsoft.Json.Formatting.None)]" TextPayloadContentType="application/json" TextPayloadEncoding="UTF-8" TlsProtocol="Automatic">
+      <uwah:NetHttpRequest.TimeoutInMiliseconds>
+        <InArgument x:TypeArguments="s:Nullable(x:Int32)">[CInt(in_Config("ExtractTimeoutMs"))]</InArgument>
+      </uwah:NetHttpRequest.TimeoutInMiliseconds>
+    </uwah:NetHttpRequest>
+    <If Condition="[CInt(resp.StatusCode) &lt;&gt; 200]" DisplayName="If extraction failed" sap2010:WorkflowViewState.IdRef="If_2">
+      <If.Then>
+        <Throw DisplayName="Throw system exception: extraction service" Exception="[New Exception(&quot;Extraction service returned HTTP &quot; &amp; CInt(resp.StatusCode).ToString &amp; &quot;: &quot; &amp; resp.TextContent)]" sap2010:WorkflowViewState.IdRef="Throw_2" />
+      </If.Then>
+    </If>
+    <Assign x:TypeArguments="njl:JObject" DisplayName="Parse extraction" sap2010:WorkflowViewState.IdRef="Assign_5" To="[extraction]" Value="[JObject.Parse(resp.TextContent)]" />
+    <Assign x:TypeArguments="njl:JObject" DisplayName="Assign fields" sap2010:WorkflowViewState.IdRef="Assign_6" To="[fields]" Value="[CType(extraction(&quot;fields&quot;), JObject)]" />
+    <Assign x:TypeArguments="njl:JObject" DisplayName="Assign conf" sap2010:WorkflowViewState.IdRef="Assign_7" To="[conf]" Value="[CType(extraction(&quot;confidence&quot;), JObject)]" />
+    <Assign x:TypeArguments="x:String" DisplayName="Assign siret" sap2010:WorkflowViewState.IdRef="Assign_8" To="[siret]" Value="[If(fields(&quot;supplier_siret&quot;) Is Nothing, &quot;&quot;, fields(&quot;supplier_siret&quot;).ToString)]" />
+    <!-- 2. Rule: every required field read, SIRET checksum valid -->
+    <Assign x:TypeArguments="x:String" DisplayName="Assign invalidFields" sap2010:WorkflowViewState.IdRef="Assign_9" To="[invalidFields]" Value="[String.Join(&quot;, &quot;, extraction(&quot;missing&quot;).Select(Function(t) t.ToString).Concat(If(siret &lt;&gt; &quot;&quot; AndAlso Not CBool(extraction(&quot;siret_checksum_ok&quot;)), New String() {&quot;supplier_siret&quot;}, New String() {})).Distinct().OrderBy(Function(n) n, StringComparer.Ordinal))]" />
+    <If Condition="[invalidFields &lt;&gt; &quot;&quot;]" DisplayName="If fields are unreadable or invalid" sap2010:WorkflowViewState.IdRef="If_3">
+      <If.Then>
+        <Throw DisplayName="Throw BE_EXTRACTION_REVIEW (fields)" Exception="[New BusinessRuleException(&quot;BE_EXTRACTION_REVIEW: Unreadable or invalid fields: &quot; &amp; invalidFields)]" sap2010:WorkflowViewState.IdRef="Throw_3" />
+      </If.Then>
+    </If>
+    <!-- 3. Rule: invoice number and date read with enough OCR confidence -->
+    <Assign x:TypeArguments="x:String" DisplayName="Assign lowConfidence" sap2010:WorkflowViewState.IdRef="Assign_10" To="[lowConfidence]" Value="[String.Join(&quot;, &quot;, New String() {&quot;invoice_number&quot;, &quot;invoice_date&quot;}.Where(Function(k) conf(k) IsNot Nothing AndAlso conf(k).Type &lt;&gt; JTokenType.Null AndAlso CDbl(conf(k)) &lt; minConf))]" />
+    <If Condition="[lowConfidence &lt;&gt; &quot;&quot;]" DisplayName="If key fields have low confidence" sap2010:WorkflowViewState.IdRef="If_4">
+      <If.Then>
+        <Throw DisplayName="Throw BE_EXTRACTION_REVIEW (confidence)" Exception="[New BusinessRuleException(&quot;BE_EXTRACTION_REVIEW: Low OCR confidence on &quot; &amp; lowConfidence)]" sap2010:WorkflowViewState.IdRef="Throw_4" />
+      </If.Then>
+    </If>
+    <Assign x:TypeArguments="x:String" DisplayName="Assign invoiceNumber" sap2010:WorkflowViewState.IdRef="Assign_11" To="[invoiceNumber]" Value="[fields(&quot;invoice_number&quot;).ToString]" />
+    <Assign x:TypeArguments="x:String" DisplayName="Assign poNumber" sap2010:WorkflowViewState.IdRef="Assign_12" To="[poNumber]" Value="[fields(&quot;po_number&quot;).ToString]" />
+    <Assign x:TypeArguments="x:Double" DisplayName="Assign ht" sap2010:WorkflowViewState.IdRef="Assign_13" To="[ht]" Value="[CDbl(fields(&quot;total_ht&quot;))]" />
+    <Assign x:TypeArguments="x:Double" DisplayName="Assign tva" sap2010:WorkflowViewState.IdRef="Assign_14" To="[tva]" Value="[CDbl(fields(&quot;tva&quot;))]" />
+    <Assign x:TypeArguments="x:Double" DisplayName="Assign ttc" sap2010:WorkflowViewState.IdRef="Assign_15" To="[ttc]" Value="[CDbl(fields(&quot;total_ttc&quot;))]" />
+    <!-- 4. Rule: HT + TVA = TTC and TVA = HT x rate (catches supplier errors and OCR misreads) -->
+    <If Condition="[Math.Abs(ht + tva - ttc) &gt; 0.011 OrElse Math.Abs(Math.Round(ht * CDbl(in_Config(&quot;VatRate&quot;)), 2) - tva) &gt; 0.011]" DisplayName="If totals are inconsistent" sap2010:WorkflowViewState.IdRef="If_5">
+      <If.Then>
+        <If Condition="[New String() {&quot;total_ht&quot;, &quot;tva&quot;, &quot;total_ttc&quot;}.Any(Function(k) conf(k) IsNot Nothing AndAlso conf(k).Type &lt;&gt; JTokenType.Null AndAlso CDbl(conf(k)) &lt; minConf)]" DisplayName="If an amount was read with low confidence" sap2010:WorkflowViewState.IdRef="If_6">
+          <If.Then>
+            <Throw DisplayName="Throw BE_EXTRACTION_REVIEW (amounts)" Exception="[New BusinessRuleException(&quot;BE_EXTRACTION_REVIEW: Totals inconsistent and an amount was read with low confidence&quot;)]" sap2010:WorkflowViewState.IdRef="Throw_5" />
+          </If.Then>
+          <If.Else>
+            <Throw DisplayName="Throw BE_TOTAL_MISMATCH" Exception="[New BusinessRuleException(&quot;BE_TOTAL_MISMATCH: HT &quot; &amp; ht.ToString(Globalization.CultureInfo.InvariantCulture) &amp; &quot; + TVA &quot; &amp; tva.ToString(Globalization.CultureInfo.InvariantCulture) &amp; &quot; != TTC &quot; &amp; ttc.ToString(Globalization.CultureInfo.InvariantCulture))]" sap2010:WorkflowViewState.IdRef="Throw_6" />
+          </If.Else>
+        </If>
+      </If.Then>
+    </If>
+    <!-- 5. Rule: supplier exists in the ERP register -->
+    <uwah:NetHttpRequest AuthenticationType="None" ContinueOnError="False" DisplayName="HTTP Request ERP supplier" EnableCookies="False" FollowRedirects="True" sap2010:WorkflowViewState.IdRef="NetHttpRequest_2" Method="GET" RequestBodyType="None" RequestUrl="[erpUrl &amp; &quot;/suppliers/&quot; &amp; Uri.EscapeDataString(siret)]" Result="[resp]" RetryPolicyType="None" SaveRawRequestResponse="False" SaveResponseAsFile="False" TlsProtocol="Automatic">
+      <uwah:NetHttpRequest.TimeoutInMiliseconds>
+        <InArgument x:TypeArguments="s:Nullable(x:Int32)">[erpTimeoutMs]</InArgument>
+      </uwah:NetHttpRequest.TimeoutInMiliseconds>
+    </uwah:NetHttpRequest>
+    <If Condition="[CInt(resp.StatusCode) &gt;= 500]" DisplayName="If ERP failed (supplier)" sap2010:WorkflowViewState.IdRef="If_7">
+      <If.Then>
+        <Throw DisplayName="Throw system exception: ERP supplier" Exception="[New Exception(&quot;ERP &quot; &amp; CInt(resp.StatusCode).ToString &amp; &quot; on GET /suppliers&quot;)]" sap2010:WorkflowViewState.IdRef="Throw_7" />
+      </If.Then>
+    </If>
+    <If Condition="[CInt(resp.StatusCode) = 404]" DisplayName="If supplier unknown" sap2010:WorkflowViewState.IdRef="If_8">
+      <If.Then>
+        <Throw DisplayName="Throw BE_UNKNOWN_SUPPLIER" Exception="[New BusinessRuleException(&quot;BE_UNKNOWN_SUPPLIER: SIRET &quot; &amp; siret &amp; &quot; not in the supplier register&quot;)]" sap2010:WorkflowViewState.IdRef="Throw_8" />
+      </If.Then>
+    </If>
+    <!-- 6. Rule: not already booked (and recover a booking whose response was lost) -->
+    <uwah:NetHttpRequest AuthenticationType="None" ContinueOnError="False" DisplayName="HTTP Request ERP existing invoices" EnableCookies="False" FollowRedirects="True" sap2010:WorkflowViewState.IdRef="NetHttpRequest_3" Method="GET" RequestBodyType="None" RequestUrl="[erpUrl &amp; &quot;/invoices?supplier_siret=&quot; &amp; Uri.EscapeDataString(siret) &amp; &quot;&amp;invoice_number=&quot; &amp; Uri.EscapeDataString(invoiceNumber)]" Result="[resp]" RetryPolicyType="None" SaveRawRequestResponse="False" SaveResponseAsFile="False" TlsProtocol="Automatic">
+      <uwah:NetHttpRequest.TimeoutInMiliseconds>
+        <InArgument x:TypeArguments="s:Nullable(x:Int32)">[erpTimeoutMs]</InArgument>
+      </uwah:NetHttpRequest.TimeoutInMiliseconds>
+    </uwah:NetHttpRequest>
+    <If Condition="[CInt(resp.StatusCode) &lt;&gt; 200]" DisplayName="If ERP failed (invoices)" sap2010:WorkflowViewState.IdRef="If_9">
+      <If.Then>
+        <Throw DisplayName="Throw system exception: ERP invoices" Exception="[New Exception(&quot;ERP &quot; &amp; CInt(resp.StatusCode).ToString &amp; &quot; on GET /invoices&quot;)]" sap2010:WorkflowViewState.IdRef="Throw_9" />
+      </If.Then>
+    </If>
+    <Assign x:TypeArguments="njl:JArray" DisplayName="Parse existing invoices" sap2010:WorkflowViewState.IdRef="Assign_16" To="[existing]" Value="[JArray.Parse(resp.TextContent)]" />
+    <Assign x:TypeArguments="x:Int32" DisplayName="Count bookings made by this queue item" sap2010:WorkflowViewState.IdRef="Assign_17" To="[bookedByThisItem]" Value="[existing.Where(Function(e) e(&quot;idempotency_key&quot;) IsNot Nothing AndAlso e(&quot;idempotency_key&quot;).ToString = in_TransactionItem.Reference).Count()]" />
+    <If Condition="[bookedByThisItem &gt; 0]" DisplayName="If an earlier attempt of this item already booked it" sap2010:WorkflowViewState.IdRef="If_10">
+      <If.Then>
+        <ui:LogMessage DisplayName="Log recovered lost response" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Warn" Message="[&quot;Invoice already booked by an earlier attempt of this item (lost response recovered), reference &quot; &amp; in_TransactionItem.Reference]" />
+      </If.Then>
+      <If.Else>
+        <Sequence DisplayName="Check PO and book" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <If Condition="[existing.Count &gt; 0]" DisplayName="If invoice already booked" sap2010:WorkflowViewState.IdRef="If_11">
+            <If.Then>
+              <Throw DisplayName="Throw BE_DUPLICATE_INVOICE" Exception="[New BusinessRuleException(&quot;BE_DUPLICATE_INVOICE: Invoice &quot; &amp; invoiceNumber &amp; &quot; already booked on &quot; &amp; existing(0)(&quot;booked_on&quot;).ToString)]" sap2010:WorkflowViewState.IdRef="Throw_10" />
+            </If.Then>
+          </If>
+          <!-- 7. Rule: open purchase order for this supplier, amount within tolerance -->
+          <uwah:NetHttpRequest AuthenticationType="None" ContinueOnError="False" DisplayName="HTTP Request ERP purchase order" EnableCookies="False" FollowRedirects="True" sap2010:WorkflowViewState.IdRef="NetHttpRequest_4" Method="GET" RequestBodyType="None" RequestUrl="[erpUrl &amp; &quot;/purchase-orders/&quot; &amp; Uri.EscapeDataString(poNumber)]" Result="[resp]" RetryPolicyType="None" SaveRawRequestResponse="False" SaveResponseAsFile="False" TlsProtocol="Automatic">
+            <uwah:NetHttpRequest.TimeoutInMiliseconds>
+              <InArgument x:TypeArguments="s:Nullable(x:Int32)">[erpTimeoutMs]</InArgument>
+            </uwah:NetHttpRequest.TimeoutInMiliseconds>
+          </uwah:NetHttpRequest>
+          <If Condition="[CInt(resp.StatusCode) &gt;= 500]" DisplayName="If ERP failed (PO)" sap2010:WorkflowViewState.IdRef="If_12">
+            <If.Then>
+              <Throw DisplayName="Throw system exception: ERP PO" Exception="[New Exception(&quot;ERP &quot; &amp; CInt(resp.StatusCode).ToString &amp; &quot; on GET /purchase-orders&quot;)]" sap2010:WorkflowViewState.IdRef="Throw_11" />
+            </If.Then>
+          </If>
+          <If Condition="[CInt(resp.StatusCode) = 404 OrElse JObject.Parse(resp.TextContent)(&quot;supplier_siret&quot;).ToString &lt;&gt; siret]" DisplayName="If no open PO for this supplier" sap2010:WorkflowViewState.IdRef="If_13">
+            <If.Then>
+              <Throw DisplayName="Throw BE_PO_NOT_FOUND" Exception="[New BusinessRuleException(&quot;BE_PO_NOT_FOUND: No open purchase order &quot; &amp; poNumber &amp; &quot; for this supplier&quot;)]" sap2010:WorkflowViewState.IdRef="Throw_12" />
+            </If.Then>
+          </If>
+          <Assign x:TypeArguments="njl:JObject" DisplayName="Parse PO" sap2010:WorkflowViewState.IdRef="Assign_18" To="[po]" Value="[JObject.Parse(resp.TextContent)]" />
+          <If Condition="[Math.Abs(CDbl(po(&quot;amount_ht&quot;)) - ht) &gt; CDbl(po(&quot;amount_ht&quot;)) * CDbl(in_Config(&quot;PoAmountTolerancePct&quot;)) / 100]" DisplayName="If invoice amount differs from the PO" sap2010:WorkflowViewState.IdRef="If_14">
+            <If.Then>
+              <Throw DisplayName="Throw BE_PO_AMOUNT_MISMATCH" Exception="[New BusinessRuleException(&quot;BE_PO_AMOUNT_MISMATCH: Invoice HT &quot; &amp; ht.ToString(Globalization.CultureInfo.InvariantCulture) &amp; &quot; vs PO &quot; &amp; po(&quot;amount_ht&quot;).ToString)]" sap2010:WorkflowViewState.IdRef="Throw_13" />
+            </If.Then>
+          </If>
+          <!-- 8. Book it. The Idempotency-Key makes a retry after a lost response safe. -->
+          <uwah:NetHttpRequest AuthenticationType="None" ContinueOnError="False" DisplayName="HTTP Request ERP book invoice" EnableCookies="False" FollowRedirects="True" Headers="[New Dictionary(Of String, String) From {{&quot;Idempotency-Key&quot;, in_TransactionItem.Reference}}]" sap2010:WorkflowViewState.IdRef="NetHttpRequest_5" Method="POST" RequestBodyType="Text" RequestUrl="[erpUrl &amp; &quot;/invoices&quot;]" Result="[resp]" RetryPolicyType="None" SaveRawRequestResponse="False" SaveResponseAsFile="False" TextPayload="[fields.ToString(Newtonsoft.Json.Formatting.None)]" TextPayloadContentType="application/json" TextPayloadEncoding="UTF-8" TlsProtocol="Automatic">
+            <uwah:NetHttpRequest.TimeoutInMiliseconds>
+              <InArgument x:TypeArguments="s:Nullable(x:Int32)">[erpTimeoutMs]</InArgument>
+            </uwah:NetHttpRequest.TimeoutInMiliseconds>
+          </uwah:NetHttpRequest>
+          <If Condition="[CInt(resp.StatusCode) &lt;&gt; 201 AndAlso CInt(resp.StatusCode) &lt;&gt; 200]" DisplayName="If booking failed" sap2010:WorkflowViewState.IdRef="If_15">
+            <If.Then>
+              <Throw DisplayName="Throw system exception: ERP booking" Exception="[New Exception(&quot;ERP &quot; &amp; CInt(resp.StatusCode).ToString &amp; &quot; on POST /invoices&quot;)]" sap2010:WorkflowViewState.IdRef="Throw_14" />
+            </If.Then>
+          </If>
+          <ui:LogMessage DisplayName="Log booked" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Booked in ERP: id &quot; &amp; JObject.Parse(resp.TextContent)(&quot;id&quot;).ToString &amp; &quot;, invoice &quot; &amp; invoiceNumber]" />
+        </Sequence>
+      </If.Else>
+    </If>
+  </Sequence>
+</Activity>

@@ -1,0 +1,26 @@
+{
+  "Settings": {
+    "logF_BusinessProcessName": "SupplierInvoices",
+    "ExtractApiUrl": "http://127.0.0.1:8092",
+    "ErpApiUrl": "http://127.0.0.1:8091",
+    "ErpTimeoutMs": 2000,
+    "ExtractTimeoutMs": 120000,
+    "MinFieldConfidence": 50,
+    "VatRate": 0.2,
+    "PoAmountTolerancePct": 1.0
+  },
+  "Constants": {
+    "MaxRetryNumber": 0,
+    "MaxConsecutiveSystemExceptions": 5,
+    "ExScreenshotsFolderPath": "Exceptions_Screenshots",
+    "LogMessage_GetTransactionData": "Processing Transaction Number: ",
+    "LogMessage_GetTransactionDataError": "Error getting transaction data for Transaction Number: ",
+    "LogMessage_Success": "Transaction Successful.",
+    "LogMessage_BusinessRuleException": "Business rule exception.",
+    "LogMessage_ApplicationException": "System exception.",
+    "ExceptionMessage_ConsecutiveErrors": "The maximum number of consecutive system exceptions was reached. ",
+    "RetryNumberGetTransactionItem": 2,
+    "RetryNumberSetTransactionStatus": 2,
+    "ShouldMarkJobAsFaulted": false
+  }
+}

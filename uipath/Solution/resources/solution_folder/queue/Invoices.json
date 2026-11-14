@@ -1,0 +1,37 @@
+{
+  "docVersion": "1.0.0",
+  "resource": {
+    "name": "Invoices",
+    "kind": "queue",
+    "apiVersion": "orchestrator.uipath.com/v1",
+    "isOverridable": true,
+    "dependencies": [],
+    "runtimeDependencies": [],
+    "folders": [
+      {
+        "fullyQualifiedName": "solution_folder"
+      }
+    ],
+    "spec": {
+      "name": "Invoices",
+      "description": "",
+      "enforceUniqueReference": true,
+      "encrypted": false,
+      "acceptAutomaticallyRetry": true,
+      "retryAbandonedItems": false,
+      "maxNumberOfRetries": 2,
+      "slaInHours": 0,
+      "slaInMinutes": 0,
+      "riskSlaInHours": 0,
+      "riskSlaInMinutes": 0,
+      "retentionAction": "Delete",
+      "retentionPeriod": 30,
+      "staleRetentionAction": "Delete",
+      "staleRetentionPeriod": 180,
+      "tags": []
+    },
+    "locks": [],
+    "key": "7a496669-19e7-4ac2-9e84-8d686073ed78",
+    "files": []
+  }
+}

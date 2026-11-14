@@ -1,0 +1,58 @@
+{
+  "projectId": "3ec69f7e-fd2e-4757-a27e-5df4111ae14e",
+  "name": "InvoiceDispatcher",
+  "main": "Main.xaml",
+  "dependencies": {
+    "UiPath.IntegrationService.Activities": "1.36.0",
+    "UiPath.System.Activities": "26.10.0",
+    "UiPath.WebAPI.Activities": "2.5.2"
+  },
+  "expressionLanguage": "VisualBasic",
+  "schemaVersion": "4.1",
+  "studioVersion": "26.0.204.0",
+  "projectVersion": "1.0.0",
+  "isTemplate": false,
+  "targetFramework": "Portable",
+  "entryPoints": [
+    {
+      "filePath": "Main.xaml",
+      "uniqueId": "594cefbf-9748-410d-94ad-6aca41f600db",
+      "input": [],
+      "output": []
+    }
+  ],
+  "designOptions": {
+    "fileInfoCollection": [],
+    "projectProfile": "Developement",
+    "outputType": "Process",
+    "libraryOptions": {
+      "privateWorkflows": []
+    },
+    "processOptions": {
+      "ignoredFiles": []
+    },
+    "saveToCloud": false
+  },
+  "runtimeOptions": {
+    "requiresUserInteraction": false,
+    "autoDispose": false,
+    "netFrameworkLazyLoading": false,
+    "isPausable": true,
+    "isAttended": false,
+    "supportsPersistence": false,
+    "workflowSerialization": "NewtonsoftJson",
+    "excludedLoggedData": [
+      "Private:*",
+      "*password*"
+    ],
+    "executionType": "Workflow",
+    "readyForPiP": false,
+    "startsInPiP": false,
+    "mustRestoreAllDependencies": true,
+    "pipType": "ChildSession"
+  },
+  "webServices": [],
+  "entitiesStores": [],
+  "templateProjectData": {},
+  "publishData": {}
+}
