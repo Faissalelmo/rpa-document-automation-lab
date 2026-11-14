@@ -2,7 +2,9 @@
 next to the measured run results. Nothing in the image is typed by hand: boxes come from Tesseract,
 values from the extractor, numbers from reports/*.json.
 
-Usage: python scripts/make_card_image.py [facture_XXX.jpg]
+Usage: python scripts/make_card_image.py [facture_XXX.jpg] [--uipath]
+       --uipath  label it as the UiPath REFramework robot and take the numbers from reports/uipath_performer.json
+                 (written to docs/overview_uipath.png)
 """
 from __future__ import annotations
 
@@ -46,7 +48,9 @@ def line_boxes(path: Path) -> list[tuple[str, tuple[int, int, int, int]]]:
 
 
 def main() -> None:
-    name = sys.argv[1] if len(sys.argv) > 1 else "facture_053.jpg"
+    uipath = "--uipath" in sys.argv
+    args = [a for a in sys.argv[1:] if a != "--uipath"]
+    name = args[0] if args else "facture_053.jpg"
     path = INBOX / name
     ex = read_invoice(str(path))
     report = json.loads((ROOT / "reports" / "ai_fallback.json").read_text(encoding="utf-8"))
@@ -58,7 +62,9 @@ def main() -> None:
     d.rounded_rectangle((16, 16, W - 16, H - 16), 14, fill=PANEL)
     for i, col in enumerate(("#ef4444", "#f59e0b", "#22c55e")):
         d.ellipse((36 + i * 22, 34, 48 + i * 22, 46), fill=col)
-    d.text((110, 30), "ROBOT-01 · REFramework · queue FACTURES_FOURNISSEURS", font=mono(15), fill=MUTED)
+    title = ("UiPath Studio · REFramework Performer · Orchestrator queue Invoices" if uipath
+             else "ROBOT-01 · REFramework · queue FACTURES_FOURNISSEURS")
+    d.text((110, 30), title, font=mono(15), fill=MUTED)
 
     # left: the real scan, with the lines the robot read highlighted
     scan = Image.open(path).convert("RGB")
@@ -104,13 +110,23 @@ def main() -> None:
         (f"{bst['rate_pct']:.0f}→{st['rate_pct']:.0f}%", "no-touch rate, rules → +LLM", BLUE),
         (f"{report['erp']['double_bookings']}", "double bookings, ERP chaos on", GREEN),
     ]
+    if uipath:
+        report = json.loads((ROOT / "reports" / "uipath_performer.json").read_text(encoding="utf-8"))
+        be, st, se = report["business_exceptions"], report["straight_through"], report["system_exceptions"]
+        rows = [
+            (f"{be['wrongly_booked']}", "invalid invoices booked", GREEN),
+            (f"{be['stopped_before_booking']}/{be['injected']}", "injected errors stopped", GREEN),
+            (f"{st['rate_pct']:.0f}%", f"no-touch ({st['booked']}/{st['expected']} valid)", BLUE),
+            (f"{se['recovered_by_auto_retry']}/{se['documents_affected']}", "ERP failures recovered by retry", BLUE),
+            (f"{report['erp']['double_bookings']}", "double bookings, ERP chaos on", GREEN),
+        ]
     for big, small, col in rows:
         d.text((x, y), big, font=f(28, True), fill=col)
         d.text((x + 168, y + 9), small, font=f(16), fill=MUTED)
         y += 46
     d.text((x, H - 58), f"Measured on {report['documents']} invoices vs ground truth", font=f(14), fill=MUTED)
 
-    out = ROOT / "docs" / "overview.png"
+    out = ROOT / "docs" / ("overview_uipath.png" if uipath else "overview.png")
     canvas.save(out)
     print(out, ex.fields)
 

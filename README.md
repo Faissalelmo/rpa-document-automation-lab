@@ -121,6 +121,8 @@ Full numbers, the confusion matrix and the per-document trace: [`reports/baselin
 The same process, built in **UiPath Studio 26.10** (VB.NET) and run on a local robot connected to **UiPath
 Orchestrator** (Automation Cloud):
 
+![An invoice booked by the UiPath Performer, the values it read with their OCR confidence, and the measured results of the UiPath run](docs/overview_uipath.png)
+
 - [`uipath/Solution/InvoiceDispatcher`](uipath/Solution/InvoiceDispatcher/Main.xaml) — scans the inbox,
   computes the SHA-256 of each file and calls *Add Queue Item* on the `Invoices` queue with the hash as
   *Reference*. The queue enforces unique references, so a re-sent scan is refused by Orchestrator
