@@ -138,7 +138,12 @@ Orchestrator** (Automation Cloud):
   [`rpa_lab/extract_api.py`](rpa_lab/extract_api.py). The business rules all live in the UiPath workflow.
 
 **Dispatcher, measured:** first run `Added: 100 | Duplicates rejected: 4` (the 4 re-sent scans), second run
-on the same folder `Added: 0 | Duplicates rejected: 104`.
+on the same folder `Added: 0 | Duplicates rejected: 104`. Files are read in ordinal order, so an original
+(`facture_000.jpg`) always reaches the queue before its re-sent copy (`facture_000_renvoi.jpg`); a culture-aware
+sort put the copy first (checked again with Dispatcher 1.0.1: the original is rejected first in the log).
+
+Rebuild trap: the robot caches each package by id and version (`~/.nuget/packages/<id>/<version>`), so a
+re-pack under the same version silently runs the old build. Bump the version on every pack.
 
 **Performer, measured** — 100 queue items, 1 robot, same ERP chaos as above, 173 s
 ([`reports/uipath_performer.json`](reports/uipath_performer.json), scored from the robot's execution log by
