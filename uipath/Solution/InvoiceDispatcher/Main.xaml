@@ -1,5 +1,6 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main"
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" this:Main.in_QueueName="Invoices"
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:this="clr-namespace:"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
  xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib"
  xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
@@ -7,6 +8,9 @@
  xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib"
  xmlns:ui="http://schemas.uipath.com/workflow/activities"
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_QueueName" Type="InArgument(x:String)" />
+  </x:Members>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="26">
       <x:String>System.Collections.Generic</x:String>
@@ -73,7 +77,7 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <ui:ManualTrigger Result="{x:Null}" DisplayName="Manual Trigger" sap2010:WorkflowViewState.IdRef="ManualTrigger_1" />
-    <ui:LogMessage DisplayName="Log start" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Dispatcher started on inbox: &quot; &amp; inboxFolder]" />
+    <ui:LogMessage DisplayName="Log start" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Dispatcher started on inbox: &quot; &amp; inboxFolder &amp; &quot; -&gt; queue &quot; &amp; in_QueueName]" />
     <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each scanned invoice" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[Directory.GetFiles(inboxFolder).Where(Function(f) New String() {&quot;.png&quot;, &quot;.jpg&quot;, &quot;.jpeg&quot;, &quot;.tif&quot;, &quot;.tiff&quot;}.Contains(Path.GetExtension(f).ToLowerInvariant())).OrderBy(Function(f) f, StringComparer.Ordinal).ToArray()]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="x:String">
@@ -85,7 +89,7 @@
             <TryCatch DisplayName="Try Catch" sap2010:WorkflowViewState.IdRef="TryCatch_1">
               <TryCatch.Try>
                 <Sequence DisplayName="Try" sap2010:WorkflowViewState.IdRef="Sequence_3">
-                  <ui:AddQueueItem TimeoutMS="{x:Null}" DisplayName="Add Queue Item" sap2010:WorkflowViewState.IdRef="AddQueueItem_1" Priority="Normal" QueueType="Invoices" Reference="[fileHash.Substring(0, 32)]">
+                  <ui:AddQueueItem TimeoutMS="{x:Null}" DisplayName="Add Queue Item" sap2010:WorkflowViewState.IdRef="AddQueueItem_1" Priority="Normal" QueueType="[in_QueueName]" Reference="[fileHash.Substring(0, 32)]">
                     <ui:AddQueueItem.ItemInformation>
                       <InArgument x:TypeArguments="x:String" x:Key="FilePath">[filePath]</InArgument>
                       <InArgument x:TypeArguments="x:String" x:Key="FileName">[Path.GetFileName(filePath)]</InArgument>

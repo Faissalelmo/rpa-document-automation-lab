@@ -1,0 +1,804 @@
+{
+  "run": {
+    "name": "uipath_du_performer",
+    "engine": "UiPath REFramework (Studio 26.10, VB) on a local attended robot",
+    "queue": "UiPath Orchestrator queue 'InvoicesDU' (cloud), filled by uipath/Solution/InvoiceDispatcher",
+    "extraction": "UiPath Document Understanding, pre-trained Invoices extractor (cloud); SIRET by regex over DU's OCR text",
+    "job_id": "21f4f9e4-cd7c-4f20-9e99-cd49779f468b",
+    "robots": 1,
+    "chaos": {
+      "RPA_ERP_FAILURE_RATE": "0.06",
+      "RPA_ERP_SLOW_RATE": "0.03",
+      "RPA_ERP_LOST_RESPONSE": "0.08"
+    }
+  },
+  "documents": 100,
+  "transactions_logged": 132,
+  "outcome_accuracy_pct": 88.0,
+  "straight_through": {
+    "expected": 60,
+    "booked": 54,
+    "rate_pct": 90.0
+  },
+  "business_exceptions": {
+    "injected": 40,
+    "stopped_before_booking": 40,
+    "stopped_with_the_right_reason": 34,
+    "wrongly_booked": 0
+  },
+  "false_rejections": {
+    "count": 6,
+    "reasons": {
+      "BE_EXTRACTION_REVIEW": 5,
+      "SYSTEM_FAILED": 1
+    }
+  },
+  "system_exceptions": {
+    "application_exception_items": 33,
+    "documents_affected": 26,
+    "recovered_by_auto_retry": 25,
+    "still_failed_after_retries": 1,
+    "lost_responses_recovered_without_double_booking": 7,
+    "failed_but_booked_once": [],
+    "erp_chaos_injected": {
+      "503": 15,
+      "lost_response": 7,
+      "slow": 11
+    }
+  },
+  "erp": {
+    "booked_by_robot": 54,
+    "double_bookings": 0
+  },
+  "action_center": {
+    "validation_tasks_created": 11,
+    "task_creation_failed": 0
+  },
+  "field_accuracy_by_layout_pct": {
+    "A": 100.0,
+    "B": 100.0,
+    "C": 100.0,
+    "D": 85.7
+  },
+  "fields_missing_by_layout": {
+    "A": {},
+    "B": {},
+    "C": {},
+    "D": {
+      "invoice_number": 11
+    }
+  },
+  "extractions_scored": 132,
+  "timing": {
+    "first_transaction": "2026-11-15T18:13:08.2041+00:00",
+    "last_transaction": "2026-11-15T18:30:04.997323+00:00"
+  },
+  "confusion": {
+    "BE_DUPLICATE_INVOICE": {
+      "BE_EXTRACTION_REVIEW": 2,
+      "BE_DUPLICATE_INVOICE": 6
+    },
+    "BE_PO_AMOUNT_MISMATCH": {
+      "BE_PO_AMOUNT_MISMATCH": 6,
+      "BE_EXTRACTION_REVIEW": 2
+    },
+    "BE_PO_NOT_FOUND": {
+      "BE_PO_NOT_FOUND": 7,
+      "BE_EXTRACTION_REVIEW": 1
+    },
+    "BE_TOTAL_MISMATCH": {
+      "BE_TOTAL_MISMATCH": 7,
+      "BE_EXTRACTION_REVIEW": 1
+    },
+    "BE_UNKNOWN_SUPPLIER": {
+      "BE_UNKNOWN_SUPPLIER": 8
+    },
+    "OK": {
+      "OK": 54,
+      "BE_EXTRACTION_REVIEW": 5,
+      "SYSTEM_FAILED": 1
+    }
+  },
+  "per_document": [
+    {
+      "file": "facture_000.jpg",
+      "expected": "BE_UNKNOWN_SUPPLIER",
+      "actual": "BE_UNKNOWN_SUPPLIER",
+      "attempts": 2,
+      "in_erp": false
+    },
+    {
+      "file": "facture_001.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_002.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 3,
+      "in_erp": true
+    },
+    {
+      "file": "facture_003.jpg",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 3,
+      "in_erp": true
+    },
+    {
+      "file": "facture_004.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "in_erp": true
+    },
+    {
+      "file": "facture_005.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_006.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "in_erp": true
+    },
+    {
+      "file": "facture_007.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_008.png",
+      "expected": "BE_PO_NOT_FOUND",
+      "actual": "BE_PO_NOT_FOUND",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_009.png",
+      "expected": "BE_PO_AMOUNT_MISMATCH",
+      "actual": "BE_PO_AMOUNT_MISMATCH",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_010.png",
+      "expected": "BE_PO_AMOUNT_MISMATCH",
+      "actual": "BE_PO_AMOUNT_MISMATCH",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_011.jpg",
+      "expected": "OK",
+      "actual": "BE_EXTRACTION_REVIEW",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_012.png",
+      "expected": "BE_TOTAL_MISMATCH",
+      "actual": "BE_TOTAL_MISMATCH",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_013.jpg",
+      "expected": "BE_DUPLICATE_INVOICE",
+      "actual": "BE_EXTRACTION_REVIEW",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_014.jpg",
+      "expected": "BE_DUPLICATE_INVOICE",
+      "actual": "BE_EXTRACTION_REVIEW",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_015.png",
+      "expected": "OK",
+      "actual": "BE_EXTRACTION_REVIEW",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_016.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_017.jpg",
+      "expected": "BE_PO_AMOUNT_MISMATCH",
+      "actual": "BE_PO_AMOUNT_MISMATCH",
+      "attempts": 2,
+      "in_erp": false
+    },
+    {
+      "file": "facture_018.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "in_erp": true
+    },
+    {
+      "file": "facture_019.png",
+      "expected": "BE_PO_AMOUNT_MISMATCH",
+      "actual": "BE_EXTRACTION_REVIEW",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_020.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_021.png",
+      "expected": "BE_DUPLICATE_INVOICE",
+      "actual": "BE_DUPLICATE_INVOICE",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_022.png",
+      "expected": "BE_TOTAL_MISMATCH",
+      "actual": "BE_EXTRACTION_REVIEW",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_023.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_024.jpg",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_025.png",
+      "expected": "BE_UNKNOWN_SUPPLIER",
+      "actual": "BE_UNKNOWN_SUPPLIER",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_026.jpg",
+      "expected": "BE_TOTAL_MISMATCH",
+      "actual": "BE_TOTAL_MISMATCH",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_027.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "in_erp": true
+    },
+    {
+      "file": "facture_028.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_029.jpg",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_030.jpg",
+      "expected": "BE_DUPLICATE_INVOICE",
+      "actual": "BE_DUPLICATE_INVOICE",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_031.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_032.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "in_erp": true
+    },
+    {
+      "file": "facture_033.jpg",
+      "expected": "BE_PO_NOT_FOUND",
+      "actual": "BE_PO_NOT_FOUND",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_034.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 3,
+      "in_erp": true
+    },
+    {
+      "file": "facture_035.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_036.jpg",
+      "expected": "BE_TOTAL_MISMATCH",
+      "actual": "BE_TOTAL_MISMATCH",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_037.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "in_erp": true
+    },
+    {
+      "file": "facture_038.jpg",
+      "expected": "BE_PO_NOT_FOUND",
+      "actual": "BE_EXTRACTION_REVIEW",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_039.jpg",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_040.jpg",
+      "expected": "BE_UNKNOWN_SUPPLIER",
+      "actual": "BE_UNKNOWN_SUPPLIER",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_041.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_042.jpg",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_043.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_044.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "in_erp": true
+    },
+    {
+      "file": "facture_045.jpg",
+      "expected": "BE_DUPLICATE_INVOICE",
+      "actual": "BE_DUPLICATE_INVOICE",
+      "attempts": 2,
+      "in_erp": false
+    },
+    {
+      "file": "facture_046.jpg",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "in_erp": true
+    },
+    {
+      "file": "facture_047.png",
+      "expected": "BE_UNKNOWN_SUPPLIER",
+      "actual": "BE_UNKNOWN_SUPPLIER",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_048.jpg",
+      "expected": "BE_PO_AMOUNT_MISMATCH",
+      "actual": "BE_PO_AMOUNT_MISMATCH",
+      "attempts": 2,
+      "in_erp": false
+    },
+    {
+      "file": "facture_049.jpg",
+      "expected": "OK",
+      "actual": "SYSTEM_FAILED",
+      "attempts": 3,
+      "in_erp": false
+    },
+    {
+      "file": "facture_050.jpg",
+      "expected": "BE_TOTAL_MISMATCH",
+      "actual": "BE_TOTAL_MISMATCH",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_051.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_052.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_053.jpg",
+      "expected": "OK",
+      "actual": "BE_EXTRACTION_REVIEW",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_054.png",
+      "expected": "BE_PO_NOT_FOUND",
+      "actual": "BE_PO_NOT_FOUND",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_055.png",
+      "expected": "BE_UNKNOWN_SUPPLIER",
+      "actual": "BE_UNKNOWN_SUPPLIER",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_056.jpg",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_057.png",
+      "expected": "BE_DUPLICATE_INVOICE",
+      "actual": "BE_DUPLICATE_INVOICE",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_058.jpg",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "in_erp": true
+    },
+    {
+      "file": "facture_059.jpg",
+      "expected": "OK",
+      "actual": "BE_EXTRACTION_REVIEW",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_060.jpg",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "in_erp": true
+    },
+    {
+      "file": "facture_061.png",
+      "expected": "BE_PO_AMOUNT_MISMATCH",
+      "actual": "BE_EXTRACTION_REVIEW",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_062.png",
+      "expected": "BE_PO_AMOUNT_MISMATCH",
+      "actual": "BE_PO_AMOUNT_MISMATCH",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_063.jpg",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_064.png",
+      "expected": "BE_PO_NOT_FOUND",
+      "actual": "BE_PO_NOT_FOUND",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_065.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_066.jpg",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_067.png",
+      "expected": "BE_DUPLICATE_INVOICE",
+      "actual": "BE_DUPLICATE_INVOICE",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_068.jpg",
+      "expected": "BE_TOTAL_MISMATCH",
+      "actual": "BE_TOTAL_MISMATCH",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_069.jpg",
+      "expected": "BE_PO_NOT_FOUND",
+      "actual": "BE_PO_NOT_FOUND",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_070.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_071.jpg",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "in_erp": true
+    },
+    {
+      "file": "facture_072.jpg",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_073.jpg",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "in_erp": true
+    },
+    {
+      "file": "facture_074.png",
+      "expected": "BE_UNKNOWN_SUPPLIER",
+      "actual": "BE_UNKNOWN_SUPPLIER",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_075.jpg",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_076.jpg",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_077.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_078.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "in_erp": true
+    },
+    {
+      "file": "facture_079.png",
+      "expected": "BE_PO_NOT_FOUND",
+      "actual": "BE_PO_NOT_FOUND",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_080.jpg",
+      "expected": "BE_UNKNOWN_SUPPLIER",
+      "actual": "BE_UNKNOWN_SUPPLIER",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_081.jpg",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "in_erp": true
+    },
+    {
+      "file": "facture_082.jpg",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_083.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_084.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_085.jpg",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_086.jpg",
+      "expected": "BE_DUPLICATE_INVOICE",
+      "actual": "BE_DUPLICATE_INVOICE",
+      "attempts": 3,
+      "in_erp": false
+    },
+    {
+      "file": "facture_087.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "in_erp": true
+    },
+    {
+      "file": "facture_088.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_089.png",
+      "expected": "BE_PO_AMOUNT_MISMATCH",
+      "actual": "BE_PO_AMOUNT_MISMATCH",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_090.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 3,
+      "in_erp": true
+    },
+    {
+      "file": "facture_091.jpg",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_092.jpg",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_093.jpg",
+      "expected": "BE_UNKNOWN_SUPPLIER",
+      "actual": "BE_UNKNOWN_SUPPLIER",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_094.png",
+      "expected": "BE_TOTAL_MISMATCH",
+      "actual": "BE_TOTAL_MISMATCH",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_095.png",
+      "expected": "BE_TOTAL_MISMATCH",
+      "actual": "BE_TOTAL_MISMATCH",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_096.jpg",
+      "expected": "OK",
+      "actual": "BE_EXTRACTION_REVIEW",
+      "attempts": 1,
+      "in_erp": false
+    },
+    {
+      "file": "facture_097.png",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 1,
+      "in_erp": true
+    },
+    {
+      "file": "facture_098.jpg",
+      "expected": "OK",
+      "actual": "OK",
+      "attempts": 2,
+      "in_erp": true
+    },
+    {
+      "file": "facture_099.jpg",
+      "expected": "BE_PO_NOT_FOUND",
+      "actual": "BE_PO_NOT_FOUND",
+      "attempts": 1,
+      "in_erp": false
+    }
+  ]
+}

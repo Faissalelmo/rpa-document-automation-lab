@@ -43,6 +43,8 @@ def main() -> None:
     ap.add_argument("log", type=Path)
     ap.add_argument("job_id")
     ap.add_argument("--name", default="uipath_performer")
+    ap.add_argument("--queue", default="Invoices")
+    ap.add_argument("--extractor", default="lab OCR service (Tesseract, rpa_lab/extract_api.py)")
     args = ap.parse_args()
 
     cfg = load_config()
@@ -69,8 +71,31 @@ def main() -> None:
         erp = c.get(f"{cfg['ERP_URL']}/admin/stats").json()
         booked_numbers = {i["invoice_number"] for i in c.get(f"{cfg['ERP_URL']}/admin/invoices").json()}
     # Process.xaml logs this Warn when a retry finds the booking its earlier attempt committed (lost response)
-    lost_recovered = sum(1 for line in args.log.read_text(encoding="utf-8", errors="replace").splitlines()
-                         if f'"jobId":"{args.job_id}"' in line and "lost response recovered" in line)
+    job_lines = [line for line in args.log.read_text(encoding="utf-8", errors="replace").splitlines()
+                 if f'"jobId":"{args.job_id}"' in line]
+    lost_recovered = sum(1 for line in job_lines if "lost response recovered" in line)
+    # Process.xaml logs one of these per document sent to human review (DU validation task in Action Center)
+    ac_created = sum(1 for line in job_lines if "Action Center validation task created" in line)
+    ac_failed = sum(1 for line in job_lines if "Action Center task NOT created" in line)
+
+    # Field accuracy of the extraction (DU Performer): Process.xaml logs "DU extracted: {json}" before the
+    # transaction's status line, which is the first line that names the file, so pair each with the next one.
+    fields_ok: dict[str, Counter] = defaultdict(Counter)
+    pending = None
+    for line in job_lines:
+        rec = json.loads(line[line.index("{"):])
+        msg = rec.get("message", "")
+        if msg.startswith("DU extracted: "):
+            pending = json.loads(msg[len("DU extracted: "):])
+        elif pending is not None and rec.get("logF_TransactionStatus") and rec.get("logF_TransactionID"):
+            doc = gt.get(copy_of.get(rec["logF_TransactionID"], rec["logF_TransactionID"]))
+            if doc:
+                for k, v in doc["fields"].items():
+                    fields_ok[doc["layout"]]["total"] += 1
+                    fields_ok[doc["layout"]]["ok"] += pending.get(k) == v
+                    if pending.get(k) is None:
+                        fields_ok[doc["layout"]][f"missing:{k}"] += 1
+            pending = None
 
     confusion: dict[str, Counter] = defaultdict(Counter)
     app_exc, recovered, unrecovered, per_doc = 0, 0, 0, []
@@ -93,7 +118,8 @@ def main() -> None:
     times = sorted(t["timeStamp"] for t in txs)
     result = {
         "run": {"name": args.name, "engine": "UiPath REFramework (Studio 26.10, VB) on a local attended robot",
-                "queue": "UiPath Orchestrator queue 'Invoices' (cloud), filled by uipath/Solution/InvoiceDispatcher",
+                "queue": f"UiPath Orchestrator queue '{args.queue}' (cloud), filled by uipath/Solution/InvoiceDispatcher",
+                "extraction": args.extractor,
                 "job_id": args.job_id, "robots": 1,
                 "chaos": {"RPA_ERP_FAILURE_RATE": "0.06", "RPA_ERP_SLOW_RATE": "0.03", "RPA_ERP_LOST_RESPONSE": "0.08"}},
         "documents": n,
@@ -117,6 +143,12 @@ def main() -> None:
                                                          if d["actual"] == "SYSTEM_FAILED" and d["in_erp"]],
                               "erp_chaos_injected": erp["chaos"]},
         "erp": {"booked_by_robot": erp["booked_by_robot"], "double_bookings": erp["double_bookings"]},
+        "action_center": {"validation_tasks_created": ac_created, "task_creation_failed": ac_failed},
+        # every extraction attempt (retries included), all 7 fields, against ground truth
+        "field_accuracy_by_layout_pct": {lay: pct(c["ok"], c["total"]) for lay, c in sorted(fields_ok.items())},
+        "fields_missing_by_layout": {lay: {k[8:]: v for k, v in c.items() if k.startswith("missing:")}
+                                     for lay, c in sorted(fields_ok.items())},
+        "extractions_scored": sum(c["total"] for c in fields_ok.values()) // 7,
         "timing": {"first_transaction": times[0], "last_transaction": times[-1]},
         "confusion": {e: dict(c) for e, c in sorted(confusion.items())},
         "per_document": per_doc,
@@ -125,7 +157,8 @@ def main() -> None:
     out = REPORTS / f"{args.name}.json"
     out.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
     brief = {k: result[k] for k in ("outcome_accuracy_pct", "straight_through", "business_exceptions",
-                                    "false_rejections", "system_exceptions", "erp")}
+                                    "false_rejections", "system_exceptions", "erp", "action_center",
+                                    "field_accuracy_by_layout_pct", "fields_missing_by_layout")}
     print(json.dumps(brief, indent=2, ensure_ascii=False))
     print(f"report: {out}")
 

@@ -35,6 +35,7 @@ report *wrongly booked* separately from everything else.
 | What the job asks for | Where it is |
 |---|---|
 | UiPath Studio, REFramework, Orchestrator | [`uipath/`](uipath): Dispatcher + REFramework Performer (VB.NET), real Orchestrator queue with unique reference and auto-retry — [measured](#the-uipath-version) |
+| UiPath Document Understanding, Action Center | The Performer reads each scan with DU's pre-trained Invoices extractor and sends missing/invalid fields to an Action Center validation task — [measured](#the-uipath-version) |
 | Orchestrator queue contract, exception handling | [`orchestrator.py`](rpa_lab/orchestrator.py) reproduces the queue contract (OData endpoint names, unique reference, auto-retry on *Application* exceptions only, *Abandoned*) — 7 tests |
 | REFramework, new robots | [`performer.py`](rpa_lab/performer.py): Init → Get Transaction → Process → Set Status → End, restart on system exception, stop after N consecutive |
 | Maintain / make robots reliable | Idempotent booking survives lost ERP responses; chaos injection proves it ([SDD §4](docs/SDD.md#4-idempotence--le-point-délicat)) |
@@ -134,8 +135,16 @@ Orchestrator** (Automation Cloud):
   `BE_PO_NOT_FOUND`, `BE_PO_AMOUNT_MISMATCH`). ERP calls use *HTTP Request* with no built-in retry, so a 503
   or timeout becomes a system exception and the **queue's auto-retry** re-runs the item; the booking carries
   an `Idempotency-Key`, so a retry after a lost response finds the booking instead of making a second one.
-- OCR is **not** UiPath Document Understanding: the robot calls the lab's Tesseract reader through
-  [`rpa_lab/extract_api.py`](rpa_lab/extract_api.py). The business rules all live in the UiPath workflow.
+- Reading the scan is **UiPath Document Understanding** (`UiPath.DocumentUnderstanding.Activities` 3.3.0,
+  *Extract Document Data* with the pre-trained **Invoices** model, Automation Cloud). DU has no SIRET field,
+  so the SIRET is taken by regex from DU's own OCR text and checked with its Luhn key, as in
+  [`document.py`](rpa_lab/document.py). The business rules all live in the UiPath workflow.
+- When a field is missing or invalid, the Performer creates a **DU validation task in Action Center**
+  (*Create Validation Action*, storage bucket `DU_Validation`) carrying DU's own extraction, then throws
+  `BE_EXTRACTION_REVIEW`. The robot does not wait for the person; the task stays in Action Center.
+- The first measured run used the lab's Tesseract reader through
+  [`rpa_lab/extract_api.py`](rpa_lab/extract_api.py) instead (Performer at commit `277bf55`); both runs are
+  in the table below.
 
 **Dispatcher, measured:** first run `Added: 100 | Duplicates rejected: 4` (the 4 re-sent scans), second run
 on the same folder `Added: 0 | Duplicates rejected: 104`. Files are read in ordinal order, so an original
@@ -145,29 +154,54 @@ sort put the copy first (checked again with Dispatcher 1.0.1: the original is re
 Rebuild trap: the robot caches each package by id and version (`~/.nuget/packages/<id>/<version>`), so a
 re-pack under the same version silently runs the old build. Bump the version on every pack.
 
-**Performer, measured** — 100 queue items, 1 robot, same ERP chaos as above, 173 s
-([`reports/uipath_performer.json`](reports/uipath_performer.json), scored from the robot's execution log by
-[`scripts/score_uipath_run.py`](scripts/score_uipath_run.py) with the definitions of `evaluate.py`):
+**Performer, measured** — 100 queue items, 1 robot, same ERP chaos as above, each run on a fresh queue and
+a freshly seeded ERP. Scored from the robot's execution log by
+[`scripts/score_uipath_run.py`](scripts/score_uipath_run.py) with the definitions of `evaluate.py`:
+[`reports/uipath_performer.json`](reports/uipath_performer.json) (Tesseract) and
+[`reports/uipath_du_performer.json`](reports/uipath_du_performer.json) (Document Understanding).
 
-| | Python, rules only | **UiPath REFramework** |
-|---|---|---|
-| Invalid invoices **wrongly booked** | 0 | **0** |
-| Invalid invoices stopped before booking | 40/40 | **40/40** |
-| …stopped with the exact reason | 27 | **27** |
-| Valid invoices booked straight-through | 50/60 (83.3 %) | **51/60 (85.0 %)** |
-| Final outcome = expected outcome | 77.0 % | **78.0 %** |
-| Documents hit by system exceptions, recovered by auto-retry | 22/24 | **23/24** |
-| Lost ERP responses resolved without re-booking | 7 | **7** |
-| Double bookings in the ERP | 0 | **0** |
+| | Python, rules only | UiPath + Tesseract | **UiPath + Document Understanding** |
+|---|---|---|---|
+| Invalid invoices **wrongly booked** | 0 | 0 | **0** |
+| Invalid invoices stopped before booking | 40/40 | 40/40 | **40/40** |
+| …stopped with the exact reason | 27 | 27 | **34** |
+| Valid invoices booked straight-through | 50/60 (83.3 %) | 51/60 (85.0 %) | **54/60 (90.0 %)** |
+| Final outcome = expected outcome | 77.0 % | 78.0 % | **88.0 %** |
+| Field accuracy, unseen layout D | 44.2 % | — | **85.7 %** |
+| Field accuracy, layouts A / B / C | 100 / 97.8 / 98.5 % | — | **100 / 100 / 100 %** |
+| Documents sent to Action Center for validation | — | — | **11** (0 task creation failures) |
+| Documents hit by system exceptions, recovered by auto-retry | 22/24 | 23/24 | **25/26** |
+| Lost ERP responses resolved without re-booking | 7 | 7 | **7** |
+| Double bookings in the ERP | 0 | 0 | **0** |
+| Run time, 100 items (robot job) | — | 173 s | **≈ 17 min** |
 
-The one unrecovered document (`facture_065.png`) failed on all three attempts; on the last one the booking
-committed and its response was lost. Orchestrator therefore shows it *Failed* while the ERP holds it, booked
-once. One more retry closes it through the idempotency key — the L2 path above.
+What the DU run shows:
+- **Every value DU returned was right.** Over 132 extractions (retries included), 7 fields each, no field
+  came back with a wrong value. The only failure was a *blank*: on all 11 layout-D invoices DU left the
+  invoice number empty. Layout D prints it as *"Pièce comptable : F2026765-011"*, a label the pre-trained
+  model evidently does not map to `invoice-no`. Every other field on layout D was read correctly.
+- **The blanks went to a person, not to the ERP.** Each of the 11 became an Action Center validation task
+  and a `BE_EXTRACTION_REVIEW`. 5 were valid invoices (the 6 missing straight-through bookings are these 5
+  plus 1 system failure), 6 carried an injected error, which a person now sees under the review reason
+  instead of the exact one.
+- The next step on real volume would be a custom DU extractor or a taxonomy field trained on that
+  supplier's label, not a looser rule. Field-level confidence came back at 1.00 for every value, so the
+  low-confidence route was never used; the missing-field route is what caught the problem.
+- DU is a cloud call per page: the run took 17 min instead of 173 s, and consumes Platform Units on the
+  tenant.
+- The one unrecovered system failure (`facture_049.jpg`) failed on all three attempts and is not in the
+  ERP; one L2 retry closes it.
 
-To reproduce: start the ERP (with the chaos variables) and `uvicorn --factory rpa_lab.extract_api:create_app
---port 8092`, run the Dispatcher then the Performer (Studio, or `uipcli package pack` +
-`UiRobot execute --file <nupkg> --folder Shared`), then
-`python scripts/score_uipath_run.py <Execution.log> <jobId>`.
+In the Tesseract run, the one unrecovered document (`facture_065.png`) failed on all three attempts; on the
+last one the booking committed and its response was lost. Orchestrator therefore shows it *Failed* while the
+ERP holds it, booked once. One more retry closes it through the idempotency key — the L2 path above.
+
+To reproduce (DU version): in the Orchestrator folder, create a queue (unique reference, auto-retry 2) named
+as `OrchestratorQueueName` in [`Data/Config.json`](uipath/InvoicePerformer/Data/Config.json) and a storage
+bucket `DU_Validation`; start the ERP with the chaos variables; run the Dispatcher with
+`--input '{"in_QueueName":"InvoicesDU"}'`, then the Performer (`uipcli package pack` +
+`UiRobot execute --file <nupkg> --folder Shared`, new version on every pack), then
+`python scripts/score_uipath_run.py <Execution.log> <jobId> --name uipath_du_performer --queue InvoicesDU`.
 
 ## Run it
 
@@ -204,10 +238,11 @@ rpa_lab/
   erp.py                fake ERP with chaos and idempotency
   evaluate.py           scoring against ground truth
   exceptions_report.py  Excel report for the business
-  extract_api.py        OCR behind HTTP, called by the UiPath Performer
+  extract_api.py        OCR behind HTTP (used by the first, Tesseract-based UiPath run)
 uipath/
   Solution/InvoiceDispatcher   UiPath Dispatcher (Studio 26.10, VB.NET)
-  InvoicePerformer             UiPath REFramework Performer
+  InvoicePerformer             UiPath REFramework Performer (Document Understanding + Action Center)
+  DuProbe                      6-invoice DU check run before wiring DU into the Performer
 ops/                    PowerShell L2 support scripts
 docs/                   PDD, SDD, runbook (FR), UiPath / Power Automate mapping
 synthetic/generate.py   test-set generator

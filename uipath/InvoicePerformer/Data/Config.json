@@ -1,10 +1,9 @@
 {
   "Settings": {
     "logF_BusinessProcessName": "SupplierInvoices",
-    "ExtractApiUrl": "http://127.0.0.1:8092",
+    "OrchestratorQueueName": "InvoicesDU",
     "ErpApiUrl": "http://127.0.0.1:8091",
     "ErpTimeoutMs": 2000,
-    "ExtractTimeoutMs": 120000,
     "MinFieldConfidence": 50,
     "VatRate": 0.2,
     "PoAmountTolerancePct": 1.0

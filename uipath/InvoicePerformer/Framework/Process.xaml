@@ -1,4 +1,4 @@
-﻿<Activity mc:Ignorable="sap sap2010" x:Class="Process" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uwah="clr-namespace:UiPath.Web.Activities.Http;assembly=UiPath.Web.Activities" xmlns:njl="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json" xmlns:uwahm="clr-namespace:UiPath.Web.Activities.Http.Models;assembly=UiPath.Web.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<Activity mc:Ignorable="sap sap2010" x:Class="Process" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uwah="clr-namespace:UiPath.Web.Activities.Http;assembly=UiPath.Web.Activities" xmlns:njl="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json" xmlns:uwahm="clr-namespace:UiPath.Web.Activities.Http.Models;assembly=UiPath.Web.Activities" xmlns:du="clr-namespace:UiPath.IntelligentOCR.StudioWeb.Activities;assembly=UiPath.IntelligentOCR.StudioWeb.Activities" xmlns:dux="clr-namespace:UiPath.IntelligentOCR.StudioWeb.Activities.DataExtraction;assembly=UiPath.IntelligentOCR.StudioWeb.Activities" xmlns:duVal="clr-namespace:UiPath.IntelligentOCR.StudioWeb.Activities.DataValidation;assembly=UiPath.IntelligentOCR.StudioWeb.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property sap2010:Annotation.AnnotationText="Transaction item to be processed." Name="in_TransactionItem" Type="InArgument(ui:QueueItem)" />
     <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
@@ -46,6 +46,12 @@
       <x:String>UiPath.Sdk.Activities</x:String>
       <x:String>UiPath.Sdk.Activities.DependencyInjection.Contracts</x:String>
       <x:String>UiPath.Sdk.Activities.DependencyInjection</x:String>
+      <x:String>System.Globalization</x:String>
+      <x:String>System.Text.RegularExpressions</x:String>
+      <x:String>UiPath.IntelligentOCR.StudioWeb.Activities</x:String>
+      <x:String>UiPath.IntelligentOCR.StudioWeb.Activities.DataExtraction</x:String>
+      <x:String>UiPath.IntelligentOCR.StudioWeb.Activities.DataValidation</x:String>
+      <x:String>UiPath.DocumentProcessing.Contracts.Results</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -101,6 +107,9 @@
       <AssemblyReference>System.Reflection.DispatchProxy</AssemblyReference>
       <AssemblyReference>System.Reflection.TypeExtensions</AssemblyReference>
       <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
+      <AssemblyReference>System.Text.RegularExpressions</AssemblyReference>
+      <AssemblyReference>UiPath.IntelligentOCR.StudioWeb.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.DocumentProcessing.Contracts</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
     <Sequence sap2010:Annotation.AnnotationText="One supplier invoice per transaction: read it through the extraction service, apply the business rules, check the ERP master data, book it idempotently.&#xA;Bad data throws BusinessRuleException (not retried, routed to a human). Any other exception (ERP 5xx, timeout, extraction service down) propagates as a system exception: the framework re-initialises and the queue's auto-retry re-runs the item." DisplayName="Process" sap2010:WorkflowViewState.IdRef="Sequence_1">
@@ -124,6 +133,13 @@
       <Variable x:TypeArguments="njl:JArray" Name="existing" />
       <Variable x:TypeArguments="x:Int32" Name="bookedByThisItem" />
       <Variable x:TypeArguments="njl:JObject" Name="po" />
+      <Variable x:TypeArguments="dux:IDocumentData(dux:DictionaryData)" Name="duResults" />
+      <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="duValues" />
+      <Variable x:TypeArguments="scg:Dictionary(x:String, x:Double)" Name="duConf" />
+      <Variable x:TypeArguments="scg:Dictionary(x:String, x:Object)" Name="fieldMap" />
+      <Variable x:TypeArguments="x:String" Name="ocrText" />
+      <Variable x:TypeArguments="x:String" Name="reviewReason" />
+      <Variable x:TypeArguments="duVal:CreatedValidationAction(dux:DictionaryData)" Name="validationTask" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -141,33 +157,53 @@
         <Throw DisplayName="Throw system exception: input file not found" Exception="[New FileNotFoundException(&quot;Input file not found: &quot; &amp; filePath)]" sap2010:WorkflowViewState.IdRef="Throw_1" />
       </If.Then>
     </If>
-    <!-- 1. Read the document through the extraction service -->
-    <uwah:NetHttpRequest AuthenticationType="None" ContinueOnError="False" DisplayName="HTTP Request extract invoice" EnableCookies="False" FollowRedirects="True" sap2010:WorkflowViewState.IdRef="NetHttpRequest_1" Method="POST" RequestBodyType="Text" RequestUrl="[in_Config(&quot;ExtractApiUrl&quot;).ToString.TrimEnd(&quot;/&quot;c) &amp; &quot;/extract&quot;]" Result="[resp]" RetryPolicyType="None" SaveRawRequestResponse="False" SaveResponseAsFile="False" TextPayload="[New JObject(New JProperty(&quot;path&quot;, filePath)).ToString(Newtonsoft.Json.Formatting.None)]" TextPayloadContentType="application/json" TextPayloadEncoding="UTF-8" TlsProtocol="Automatic">
-      <uwah:NetHttpRequest.TimeoutInMiliseconds>
-        <InArgument x:TypeArguments="s:Nullable(x:Int32)">[CInt(in_Config("ExtractTimeoutMs"))]</InArgument>
-      </uwah:NetHttpRequest.TimeoutInMiliseconds>
-    </uwah:NetHttpRequest>
-    <If Condition="[CInt(resp.StatusCode) &lt;&gt; 200]" DisplayName="If extraction failed" sap2010:WorkflowViewState.IdRef="If_2">
-      <If.Then>
-        <Throw DisplayName="Throw system exception: extraction service" Exception="[New Exception(&quot;Extraction service returned HTTP &quot; &amp; CInt(resp.StatusCode).ToString &amp; &quot;: &quot; &amp; resp.TextContent)]" sap2010:WorkflowViewState.IdRef="Throw_2" />
-      </If.Then>
-    </If>
-    <Assign x:TypeArguments="njl:JObject" DisplayName="Parse extraction" sap2010:WorkflowViewState.IdRef="Assign_5" To="[extraction]" Value="[JObject.Parse(resp.TextContent)]" />
-    <Assign x:TypeArguments="njl:JObject" DisplayName="Assign fields" sap2010:WorkflowViewState.IdRef="Assign_6" To="[fields]" Value="[CType(extraction(&quot;fields&quot;), JObject)]" />
-    <Assign x:TypeArguments="njl:JObject" DisplayName="Assign conf" sap2010:WorkflowViewState.IdRef="Assign_7" To="[conf]" Value="[CType(extraction(&quot;confidence&quot;), JObject)]" />
+    <!-- 1. Read the document with UiPath Document Understanding (Predefined project, pretrained Invoices extractor).
+         A DU failure (service down, timeout) is an ordinary exception, so it becomes a system exception and the item is retried. -->
+    <du:ExtractDocumentDataWithDocumentData x:TypeArguments="dux:DictionaryData" DisplayName="Extract Document Data (DU Invoices)" sap2010:WorkflowViewState.IdRef="ExtractDocumentDataWithDocumentData_1" ActivityMajorVersion="2" ProjectId="00000000-0000-0000-0000-000000000000" ProjectName="Predefined" ProjectTag="Production" ProjectVersionName="Production" ProjectVersionNumber="0" DocType="[&quot;invoices&quot;]" ExtractorName="Invoices" ModernDocumentTypeId="invoices" ModernDocumentTypeName="Invoices" GenerateData="False" FileInput="[LocalResource.FromPath(filePath)]" TimeoutInSeconds="[600]" ExtractionResults="[duResults]">
+      <du:ExtractDocumentDataWithDocumentData.GptPromptWithVariables>
+        <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+      </du:ExtractDocumentDataWithDocumentData.GptPromptWithVariables>
+    </du:ExtractDocumentDataWithDocumentData>
+    <Assign x:TypeArguments="scg:Dictionary(x:String, x:String)" DisplayName="DU values by field id" sap2010:WorkflowViewState.IdRef="Assign_5" To="[duValues]" Value="[duResults.Data.GetFields().ToDictionary(Function(d) d.FieldId.Split(&quot;.&quot;c).Last(), Function(d) If(d.Values Is Nothing OrElse d.Values.Length = 0, CStr(Nothing), d.Values(0).Value))]" />
+    <Assign x:TypeArguments="scg:Dictionary(x:String, x:Double)" DisplayName="DU confidence by field id (0-100)" sap2010:WorkflowViewState.IdRef="Assign_6" To="[duConf]" Value="[duResults.Data.GetFields().ToDictionary(Function(d) d.FieldId.Split(&quot;.&quot;c).Last(), Function(d) If(d.Values Is Nothing OrElse d.Values.Length = 0, 0.0, CDbl(d.Values(0).Confidence) * 100))]" />
+    <!-- The pretrained Invoices model has no SIRET field: take it from DU's own OCR text (first 14 digits after "SIRET") -->
+    <Assign x:TypeArguments="x:String" DisplayName="DU OCR text" sap2010:WorkflowViewState.IdRef="Assign_7" To="[ocrText]" Value="[If(duResults.DocumentMetadata.Text, &quot;&quot;)]" />
+    <Assign x:TypeArguments="x:String" DisplayName="SIRET from DU OCR text" sap2010:WorkflowViewState.IdRef="Assign_19" To="[siret]" Value="[New String(Regex.Match(ocrText, &quot;(?i)siret\s*:?\s*([\d ]{14,20})&quot;).Groups(1).Value.Where(Function(c) Char.IsDigit(c)).Take(14).ToArray())]" />
+    <Assign x:TypeArguments="scg:Dictionary(x:String, x:Object)" DisplayName="Map DU fields to the lab's field names" sap2010:WorkflowViewState.IdRef="Assign_20" To="[fieldMap]" Value="[New Dictionary(Of String, Object) From {{&quot;supplier_siret&quot;, If(siret.Length = 14, CObj(siret), Nothing)}, {&quot;invoice_number&quot;, duValues(&quot;invoice-no&quot;)}, {&quot;invoice_date&quot;, duValues(&quot;date&quot;)}, {&quot;po_number&quot;, duValues(&quot;po-no&quot;)}, {&quot;total_ht&quot;, If(duValues(&quot;net-amount&quot;) IsNot Nothing AndAlso Regex.IsMatch(duValues(&quot;net-amount&quot;), &quot;^-?\d+(\.\d+)?$&quot;), CObj(Double.Parse(duValues(&quot;net-amount&quot;), CultureInfo.InvariantCulture)), Nothing)}, {&quot;tva&quot;, If(duValues(&quot;tax&quot;) IsNot Nothing AndAlso Regex.IsMatch(duValues(&quot;tax&quot;), &quot;^-?\d+(\.\d+)?$&quot;), CObj(Double.Parse(duValues(&quot;tax&quot;), CultureInfo.InvariantCulture)), Nothing)}, {&quot;total_ttc&quot;, If(duValues(&quot;total&quot;) IsNot Nothing AndAlso Regex.IsMatch(duValues(&quot;total&quot;), &quot;^-?\d+(\.\d+)?$&quot;), CObj(Double.Parse(duValues(&quot;total&quot;), CultureInfo.InvariantCulture)), Nothing)}}]" />
+    <Assign x:TypeArguments="njl:JObject" DisplayName="Assign fields" sap2010:WorkflowViewState.IdRef="Assign_21" To="[fields]" Value="[JObject.FromObject(fieldMap)]" />
+    <Assign x:TypeArguments="njl:JObject" DisplayName="Assign conf" sap2010:WorkflowViewState.IdRef="Assign_22" To="[conf]" Value="[JObject.FromObject(New Dictionary(Of String, Double) From {{&quot;supplier_siret&quot;, 100.0}, {&quot;invoice_number&quot;, duConf(&quot;invoice-no&quot;)}, {&quot;invoice_date&quot;, duConf(&quot;date&quot;)}, {&quot;po_number&quot;, duConf(&quot;po-no&quot;)}, {&quot;total_ht&quot;, duConf(&quot;net-amount&quot;)}, {&quot;tva&quot;, duConf(&quot;tax&quot;)}, {&quot;total_ttc&quot;, duConf(&quot;total&quot;)}})]" />
+    <Assign x:TypeArguments="njl:JObject" DisplayName="Assign extraction (missing fields, SIRET checksum)" sap2010:WorkflowViewState.IdRef="Assign_23" To="[extraction]" Value="[New JObject(New JProperty(&quot;missing&quot;, New JArray(fieldMap.Where(Function(kv) kv.Value Is Nothing).Select(Function(kv) CObj(kv.Key)).ToArray())), New JProperty(&quot;siret_checksum_ok&quot;, siret.Length = 14 AndAlso siret.Reverse().Select(Function(c, i) If(i Mod 2 = 1, If((AscW(c) - 48) * 2 &gt; 9, (AscW(c) - 48) * 2 - 9, (AscW(c) - 48) * 2), AscW(c) - 48)).Sum() Mod 10 = 0))]" />
+    <ui:LogMessage DisplayName="Log DU extraction" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;DU extracted: &quot; &amp; fields.ToString(Newtonsoft.Json.Formatting.None)]" />
     <Assign x:TypeArguments="x:String" DisplayName="Assign siret" sap2010:WorkflowViewState.IdRef="Assign_8" To="[siret]" Value="[If(fields(&quot;supplier_siret&quot;) Is Nothing, &quot;&quot;, fields(&quot;supplier_siret&quot;).ToString)]" />
     <!-- 2. Rule: every required field read, SIRET checksum valid -->
     <Assign x:TypeArguments="x:String" DisplayName="Assign invalidFields" sap2010:WorkflowViewState.IdRef="Assign_9" To="[invalidFields]" Value="[String.Join(&quot;, &quot;, extraction(&quot;missing&quot;).Select(Function(t) t.ToString).Concat(If(siret &lt;&gt; &quot;&quot; AndAlso Not CBool(extraction(&quot;siret_checksum_ok&quot;)), New String() {&quot;supplier_siret&quot;}, New String() {})).Distinct().OrderBy(Function(n) n, StringComparer.Ordinal))]" />
-    <If Condition="[invalidFields &lt;&gt; &quot;&quot;]" DisplayName="If fields are unreadable or invalid" sap2010:WorkflowViewState.IdRef="If_3">
-      <If.Then>
-        <Throw DisplayName="Throw BE_EXTRACTION_REVIEW (fields)" Exception="[New BusinessRuleException(&quot;BE_EXTRACTION_REVIEW: Unreadable or invalid fields: &quot; &amp; invalidFields)]" sap2010:WorkflowViewState.IdRef="Throw_3" />
-      </If.Then>
-    </If>
     <!-- 3. Rule: invoice number and date read with enough OCR confidence -->
     <Assign x:TypeArguments="x:String" DisplayName="Assign lowConfidence" sap2010:WorkflowViewState.IdRef="Assign_10" To="[lowConfidence]" Value="[String.Join(&quot;, &quot;, New String() {&quot;invoice_number&quot;, &quot;invoice_date&quot;}.Where(Function(k) conf(k) IsNot Nothing AndAlso conf(k).Type &lt;&gt; JTokenType.Null AndAlso CDbl(conf(k)) &lt; minConf))]" />
-    <If Condition="[lowConfidence &lt;&gt; &quot;&quot;]" DisplayName="If key fields have low confidence" sap2010:WorkflowViewState.IdRef="If_4">
+    <Assign x:TypeArguments="x:String" DisplayName="Assign reviewReason" sap2010:WorkflowViewState.IdRef="Assign_24" To="[reviewReason]" Value="[If(invalidFields &lt;&gt; &quot;&quot;, &quot;Unreadable or invalid fields: &quot; &amp; invalidFields, If(lowConfidence &lt;&gt; &quot;&quot;, &quot;Low OCR confidence on &quot; &amp; lowConfidence, &quot;&quot;))]" />
+    <!-- Needs a human: open a Document Validation task in Action Center (no wait, so no persistence needed), then stop the item as a business exception -->
+    <If Condition="[reviewReason &lt;&gt; &quot;&quot;]" DisplayName="If the extraction needs a human" sap2010:WorkflowViewState.IdRef="If_3">
       <If.Then>
-        <Throw DisplayName="Throw BE_EXTRACTION_REVIEW (confidence)" Exception="[New BusinessRuleException(&quot;BE_EXTRACTION_REVIEW: Low OCR confidence on &quot; &amp; lowConfidence)]" sap2010:WorkflowViewState.IdRef="Throw_4" />
+        <Sequence DisplayName="Route to Action Center" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <TryCatch DisplayName="Try create validation task" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+            <TryCatch.Try>
+              <Sequence DisplayName="Create task" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                <duVal:CreateValidationAction x:TypeArguments="dux:DictionaryData" DisplayName="Create Validation Task" sap2010:WorkflowViewState.IdRef="CreateValidationAction_1" AutomaticExtractionResults="[duResults]" ActionTitle="[&quot;Invoice review: &quot; &amp; in_TransactionItem.SpecificContent(&quot;FileName&quot;).ToString &amp; &quot; - &quot; &amp; reviewReason]" ActionPriority="[&quot;Medium&quot;]" OrchestratorFolderName="[&quot;Shared&quot;]" CreatedValidationAction="[validationTask]" />
+                <ui:LogMessage DisplayName="Log task created" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;Action Center validation task created for &quot; &amp; in_TransactionItem.SpecificContent(&quot;FileName&quot;).ToString]" />
+              </Sequence>
+            </TryCatch.Try>
+            <TryCatch.Catches>
+              <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch_1">
+                <ActivityAction x:TypeArguments="s:Exception">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="s:Exception" Name="taskError" />
+                  </ActivityAction.Argument>
+                  <ui:LogMessage DisplayName="Log task failure" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Warn" Message="[&quot;Action Center task NOT created: &quot; &amp; taskError.GetType().Name &amp; &quot;: &quot; &amp; taskError.Message]" />
+                </ActivityAction>
+              </Catch>
+            </TryCatch.Catches>
+          </TryCatch>
+          <Throw DisplayName="Throw BE_EXTRACTION_REVIEW" Exception="[New BusinessRuleException(&quot;BE_EXTRACTION_REVIEW: &quot; &amp; reviewReason)]" sap2010:WorkflowViewState.IdRef="Throw_3" />
+        </Sequence>
       </If.Then>
     </If>
     <Assign x:TypeArguments="x:String" DisplayName="Assign invoiceNumber" sap2010:WorkflowViewState.IdRef="Assign_11" To="[invoiceNumber]" Value="[fields(&quot;invoice_number&quot;).ToString]" />

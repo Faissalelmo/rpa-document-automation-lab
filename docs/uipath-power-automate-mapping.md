@@ -14,8 +14,8 @@ REFramework Performer (Studio 26.10, VB.NET), run against a UiPath Orchestrator 
 | `rpa_lab/performer.py` state machine | REFramework template (Init, Get Transaction Data, Process, End) | Cloud flow with *Scope* blocks Try / Catch / Finally |
 | `BusinessRuleException` / `ApplicationException` | Same names, same semantics in REFramework | Catch scope that branches on the error type |
 | `config/settings.json` + `RPA_*` overrides | `Data/Config.xlsx` + Orchestrator Assets | Environment variables + Azure Key Vault / connection references |
-| `rpa_lab/document.py` (Tesseract + rules) | Document Understanding: *Digitize Document* → *Extract Document Data* (Regex / Form extractor) | AI Builder *Extract information from invoices* |
-| confidence < threshold → `BE_EXTRACTION_REVIEW` | *Present Validation Station* / Action Center task | *Start and wait for an approval* |
+| `rpa_lab/document.py` (Tesseract + rules) | Document Understanding: *Extract Document Data*, pre-trained **Invoices** model (**built**; SIRET by regex over DU's OCR text) | AI Builder *Extract information from invoices* |
+| missing / invalid field → `BE_EXTRACTION_REVIEW` | *Create Validation Action* → DU validation task in **Action Center** (**built**) | *Start and wait for an approval* |
 | `rpa_lab/ai_fallback.py` (local LLM) | Generative extractor / *GenAI activities* | AI Builder GPT prompt |
 | ERP REST calls + `Idempotency-Key` | *HTTP Request* activity with a header | HTTP connector / custom connector |
 | `rpa_lab/exceptions_report.py` (Excel) | *Excel Application Scope* / *Write Range*, sent by *Send Outlook Mail* | *Create table* in Excel Online + *Send an email (V2)* |
@@ -25,8 +25,11 @@ REFramework Performer (Studio 26.10, VB.NET), run against a UiPath Orchestrator 
 
 - **UiPath — done.** The Performer starts from the official REFramework template; `Process.xaml` carries the
   checks from `performer.py` (RG-01 to RG-07) and calls the ERP with *HTTP Request* + `Idempotency-Key`.
-  The `Invoices` queue uses *Unique Reference* and 2 auto-retries. Two pieces are **not** UiPath-native yet:
-  OCR goes through the lab's Tesseract reader behind `rpa_lab/extract_api.py` instead of Document
-  Understanding, and the review route is a business exception, not an Action Center task.
+  The queue uses *Unique Reference* and 2 auto-retries. Reading is **Document Understanding** (pre-trained
+  Invoices extractor), and a missing or invalid field creates a **validation task in Action Center** before
+  the business exception is thrown. The robot does not wait for the task (no persistence), so the person's
+  corrections are not yet fed back into the queue. Measured results:
+  [README, The UiPath version](../README.md#the-uipath-version). The first UiPath run used the lab's
+  Tesseract reader (`rpa_lab/extract_api.py`); it is kept for comparison.
 - **Power Automate — not done.** The dispatcher would become a SharePoint trigger, the ERP checks HTTP
   actions, the review step an approval in Teams. It needs a Microsoft 365 tenant.
