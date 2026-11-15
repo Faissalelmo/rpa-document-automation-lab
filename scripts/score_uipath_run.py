@@ -81,6 +81,7 @@ def main() -> None:
     # Field accuracy of the extraction (DU Performer): Process.xaml logs "DU extracted: {json}" before the
     # transaction's status line, which is the first line that names the file, so pair each with the next one.
     fields_ok: dict[str, Counter] = defaultdict(Counter)
+    extracted: dict[str, dict] = {}  # last extraction per original document
     pending = None
     for line in job_lines:
         rec = json.loads(line[line.index("{"):])
@@ -90,6 +91,7 @@ def main() -> None:
         elif pending is not None and rec.get("logF_TransactionStatus") and rec.get("logF_TransactionID"):
             doc = gt.get(copy_of.get(rec["logF_TransactionID"], rec["logF_TransactionID"]))
             if doc:
+                extracted[doc["file"]] = pending
                 for k, v in doc["fields"].items():
                     fields_ok[doc["layout"]]["total"] += 1
                     fields_ok[doc["layout"]]["ok"] += pending.get(k) == v
@@ -110,7 +112,8 @@ def main() -> None:
             recovered += actual != "SYSTEM_FAILED"
             unrecovered += actual == "SYSTEM_FAILED"
         per_doc.append({"file": name, "expected": expected, "actual": actual, "attempts": len(chain or []),
-                        "in_erp": doc["fields"]["invoice_number"] in booked_numbers})
+                        "in_erp": doc["fields"]["invoice_number"] in booked_numbers,
+                        **({"extracted": extracted[name]} if name in extracted else {})})
 
     n = len(gt)
     pct = lambda a, b: round(100 * a / b, 1) if b else None  # noqa: E731

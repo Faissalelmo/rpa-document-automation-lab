@@ -105,700 +105,1600 @@
       "expected": "BE_UNKNOWN_SUPPLIER",
       "actual": "BE_UNKNOWN_SUPPLIER",
       "attempts": 2,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "65444463478612",
+        "invoice_number": "F2026285-000",
+        "invoice_date": "2026-09-16",
+        "po_number": "PO-2026-51465",
+        "total_ht": 244.1,
+        "tva": 48.82,
+        "total_ttc": 292.92
+      }
     },
     {
       "file": "facture_001.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "16786843353265",
+        "invoice_number": "F2026721-001",
+        "invoice_date": "2026-09-02",
+        "po_number": "PO-2026-95150",
+        "total_ht": 414.3,
+        "tva": 82.86,
+        "total_ttc": 497.16
+      }
     },
     {
       "file": "facture_002.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 3,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "57551313735379",
+        "invoice_number": "F2026947-002",
+        "invoice_date": "2026-09-03",
+        "po_number": "PO-2026-58525",
+        "total_ht": 1368.2,
+        "tva": 273.64,
+        "total_ttc": 1641.84
+      }
     },
     {
       "file": "facture_003.jpg",
       "expected": "OK",
       "actual": "OK",
       "attempts": 3,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "19829657249208",
+        "invoice_number": "F2026006-003",
+        "invoice_date": "2026-10-03",
+        "po_number": "PO-2026-48287",
+        "total_ht": 3727.1,
+        "tva": 745.42,
+        "total_ttc": 4472.52
+      }
     },
     {
       "file": "facture_004.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 2,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "96030824628194",
+        "invoice_number": "F2026236-004",
+        "invoice_date": "2026-09-19",
+        "po_number": "PO-2026-70963",
+        "total_ht": 1090.0,
+        "tva": 218.0,
+        "total_ttc": 1308.0
+      }
     },
     {
       "file": "facture_005.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "96030824628194",
+        "invoice_number": "F2026149-005",
+        "invoice_date": "2026-09-02",
+        "po_number": "PO-2026-61571",
+        "total_ht": 4989.0,
+        "tva": 997.8,
+        "total_ttc": 5986.8
+      }
     },
     {
       "file": "facture_006.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 2,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "80141269060443",
+        "invoice_number": "F2026188-006",
+        "invoice_date": "2026-10-16",
+        "po_number": "PO-2026-61553",
+        "total_ht": 368.3,
+        "tva": 73.66,
+        "total_ttc": 441.96
+      }
     },
     {
       "file": "facture_007.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "83726167513613",
+        "invoice_number": "F2026337-007",
+        "invoice_date": "2026-10-04",
+        "po_number": "PO-2026-34993",
+        "total_ht": 267.0,
+        "tva": 53.4,
+        "total_ttc": 320.4
+      }
     },
     {
       "file": "facture_008.png",
       "expected": "BE_PO_NOT_FOUND",
       "actual": "BE_PO_NOT_FOUND",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "19829657249208",
+        "invoice_number": "F2026173-008",
+        "invoice_date": "2026-09-18",
+        "po_number": "PO-2026-24281",
+        "total_ht": 3875.3,
+        "tva": 775.06,
+        "total_ttc": 4650.36
+      }
     },
     {
       "file": "facture_009.png",
       "expected": "BE_PO_AMOUNT_MISMATCH",
       "actual": "BE_PO_AMOUNT_MISMATCH",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "96030824628194",
+        "invoice_number": "F2026787-009",
+        "invoice_date": "2026-09-04",
+        "po_number": "PO-2026-50461",
+        "total_ht": 2860.0,
+        "tva": 572.0,
+        "total_ttc": 3432.0
+      }
     },
     {
       "file": "facture_010.png",
       "expected": "BE_PO_AMOUNT_MISMATCH",
       "actual": "BE_PO_AMOUNT_MISMATCH",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "19829657249208",
+        "invoice_number": "F2026918-010",
+        "invoice_date": "2026-10-11",
+        "po_number": "PO-2026-72198",
+        "total_ht": 4828.0,
+        "tva": 965.6,
+        "total_ttc": 5793.6
+      }
     },
     {
       "file": "facture_011.jpg",
       "expected": "OK",
       "actual": "BE_EXTRACTION_REVIEW",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "31067924708227",
+        "invoice_number": null,
+        "invoice_date": "2026-09-22",
+        "po_number": "PO-2026-18238",
+        "total_ht": 192.5,
+        "tva": 38.5,
+        "total_ttc": 231.0
+      }
     },
     {
       "file": "facture_012.png",
       "expected": "BE_TOTAL_MISMATCH",
       "actual": "BE_TOTAL_MISMATCH",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "83726167513613",
+        "invoice_number": "F2026706-012",
+        "invoice_date": "2026-10-09",
+        "po_number": "PO-2026-51482",
+        "total_ht": 2614.1,
+        "tva": 522.82,
+        "total_ttc": 3236.92
+      }
     },
     {
       "file": "facture_013.jpg",
       "expected": "BE_DUPLICATE_INVOICE",
       "actual": "BE_EXTRACTION_REVIEW",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "31067924708227",
+        "invoice_number": null,
+        "invoice_date": "2026-09-30",
+        "po_number": "PO-2026-72283",
+        "total_ht": 19.6,
+        "tva": 3.92,
+        "total_ttc": 23.52
+      }
     },
     {
       "file": "facture_014.jpg",
       "expected": "BE_DUPLICATE_INVOICE",
       "actual": "BE_EXTRACTION_REVIEW",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "31067924708227",
+        "invoice_number": null,
+        "invoice_date": "2026-09-21",
+        "po_number": "PO-2026-29833",
+        "total_ht": 1701.3,
+        "tva": 340.26,
+        "total_ttc": 2041.56
+      }
     },
     {
       "file": "facture_015.png",
       "expected": "OK",
       "actual": "BE_EXTRACTION_REVIEW",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "31067924708227",
+        "invoice_number": null,
+        "invoice_date": "2026-09-05",
+        "po_number": "PO-2026-30963",
+        "total_ht": 2190.0,
+        "tva": 438.0,
+        "total_ttc": 2628.0
+      }
     },
     {
       "file": "facture_016.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "19829657249208",
+        "invoice_number": "F2026557-016",
+        "invoice_date": "2026-09-28",
+        "po_number": "PO-2026-52697",
+        "total_ht": 2385.0,
+        "tva": 477.0,
+        "total_ttc": 2862.0
+      }
     },
     {
       "file": "facture_017.jpg",
       "expected": "BE_PO_AMOUNT_MISMATCH",
       "actual": "BE_PO_AMOUNT_MISMATCH",
       "attempts": 2,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "96030824628194",
+        "invoice_number": "F2026086-017",
+        "invoice_date": "2026-10-16",
+        "po_number": "PO-2026-37307",
+        "total_ht": 75.0,
+        "tva": 15.0,
+        "total_ttc": 90.0
+      }
     },
     {
       "file": "facture_018.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 2,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "16786843353265",
+        "invoice_number": "F2026635-018",
+        "invoice_date": "2026-10-05",
+        "po_number": "PO-2026-98356",
+        "total_ht": 2930.0,
+        "tva": 586.0,
+        "total_ttc": 3516.0
+      }
     },
     {
       "file": "facture_019.png",
       "expected": "BE_PO_AMOUNT_MISMATCH",
       "actual": "BE_EXTRACTION_REVIEW",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "31067924708227",
+        "invoice_number": null,
+        "invoice_date": "2026-09-17",
+        "po_number": "PO-2026-84302",
+        "total_ht": 37.5,
+        "tva": 7.5,
+        "total_ttc": 45.0
+      }
     },
     {
       "file": "facture_020.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "57551313735379",
+        "invoice_number": "F2026334-020",
+        "invoice_date": "2026-09-16",
+        "po_number": "PO-2026-18494",
+        "total_ht": 3590.0,
+        "tva": 718.0,
+        "total_ttc": 4308.0
+      }
     },
     {
       "file": "facture_021.png",
       "expected": "BE_DUPLICATE_INVOICE",
       "actual": "BE_DUPLICATE_INVOICE",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "80141269060443",
+        "invoice_number": "F2026037-021",
+        "invoice_date": "2026-09-15",
+        "po_number": "PO-2026-23412",
+        "total_ht": 399.0,
+        "tva": 79.8,
+        "total_ttc": 478.8
+      }
     },
     {
       "file": "facture_022.png",
       "expected": "BE_TOTAL_MISMATCH",
       "actual": "BE_EXTRACTION_REVIEW",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "31067924708227",
+        "invoice_number": null,
+        "invoice_date": "2026-09-12",
+        "po_number": "PO-2026-86440",
+        "total_ht": 1808.0,
+        "tva": 361.6,
+        "total_ttc": 2159.6
+      }
     },
     {
       "file": "facture_023.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "16786843353265",
+        "invoice_number": "F2026634-023",
+        "invoice_date": "2026-09-24",
+        "po_number": "PO-2026-55835",
+        "total_ht": 2338.9,
+        "tva": 467.78,
+        "total_ttc": 2806.68
+      }
     },
     {
       "file": "facture_024.jpg",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "83726167513613",
+        "invoice_number": "F2026613-024",
+        "invoice_date": "2026-09-01",
+        "po_number": "PO-2026-95412",
+        "total_ht": 27.1,
+        "tva": 5.42,
+        "total_ttc": 32.52
+      }
     },
     {
       "file": "facture_025.png",
       "expected": "BE_UNKNOWN_SUPPLIER",
       "actual": "BE_UNKNOWN_SUPPLIER",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "65444463478612",
+        "invoice_number": "F2026079-025",
+        "invoice_date": "2026-10-02",
+        "po_number": "PO-2026-36661",
+        "total_ht": 4527.0,
+        "tva": 905.4,
+        "total_ttc": 5432.4
+      }
     },
     {
       "file": "facture_026.jpg",
       "expected": "BE_TOTAL_MISMATCH",
       "actual": "BE_TOTAL_MISMATCH",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "80141269060443",
+        "invoice_number": "F2026546-026",
+        "invoice_date": "2026-09-27",
+        "po_number": "PO-2026-21947",
+        "total_ht": 6225.1,
+        "tva": 1245.02,
+        "total_ttc": 7469.22
+      }
     },
     {
       "file": "facture_027.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 2,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "83726167513613",
+        "invoice_number": "F2026424-027",
+        "invoice_date": "2026-09-24",
+        "po_number": "PO-2026-64584",
+        "total_ht": 1060.0,
+        "tva": 212.0,
+        "total_ttc": 1272.0
+      }
     },
     {
       "file": "facture_028.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "19829657249208",
+        "invoice_number": "F2026964-028",
+        "invoice_date": "2026-09-11",
+        "po_number": "PO-2026-10770",
+        "total_ht": 4960.0,
+        "tva": 992.0,
+        "total_ttc": 5952.0
+      }
     },
     {
       "file": "facture_029.jpg",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "16786843353265",
+        "invoice_number": "F2026591-029",
+        "invoice_date": "2026-09-11",
+        "po_number": "PO-2026-57805",
+        "total_ht": 623.0,
+        "tva": 124.6,
+        "total_ttc": 747.6
+      }
     },
     {
       "file": "facture_030.jpg",
       "expected": "BE_DUPLICATE_INVOICE",
       "actual": "BE_DUPLICATE_INVOICE",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "57551313735379",
+        "invoice_number": "F2026145-030",
+        "invoice_date": "2026-09-26",
+        "po_number": "PO-2026-93973",
+        "total_ht": 44.1,
+        "tva": 8.82,
+        "total_ttc": 52.92
+      }
     },
     {
       "file": "facture_031.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "96030824628194",
+        "invoice_number": "F2026165-031",
+        "invoice_date": "2026-09-05",
+        "po_number": "PO-2026-78309",
+        "total_ht": 2729.7,
+        "tva": 545.94,
+        "total_ttc": 3275.64
+      }
     },
     {
       "file": "facture_032.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 2,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "96030824628194",
+        "invoice_number": "F2026622-032",
+        "invoice_date": "2026-10-16",
+        "po_number": "PO-2026-93409",
+        "total_ht": 1310.7,
+        "tva": 262.14,
+        "total_ttc": 1572.84
+      }
     },
     {
       "file": "facture_033.jpg",
       "expected": "BE_PO_NOT_FOUND",
       "actual": "BE_PO_NOT_FOUND",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "80141269060443",
+        "invoice_number": "F2026629-033",
+        "invoice_date": "2026-09-12",
+        "po_number": "PO-2026-35704",
+        "total_ht": 929.6,
+        "tva": 185.92,
+        "total_ttc": 1115.52
+      }
     },
     {
       "file": "facture_034.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 3,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "80141269060443",
+        "invoice_number": "F2026392-034",
+        "invoice_date": "2026-09-16",
+        "po_number": "PO-2026-57082",
+        "total_ht": 319.3,
+        "tva": 63.86,
+        "total_ttc": 383.16
+      }
     },
     {
       "file": "facture_035.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "19829657249208",
+        "invoice_number": "F2026683-035",
+        "invoice_date": "2026-10-09",
+        "po_number": "PO-2026-52493",
+        "total_ht": 84.0,
+        "tva": 16.8,
+        "total_ttc": 100.8
+      }
     },
     {
       "file": "facture_036.jpg",
       "expected": "BE_TOTAL_MISMATCH",
       "actual": "BE_TOTAL_MISMATCH",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "16786843353265",
+        "invoice_number": "F2026398-036",
+        "invoice_date": "2026-09-12",
+        "po_number": "PO-2026-96355",
+        "total_ht": 1404.3,
+        "tva": 280.86,
+        "total_ttc": 1686.06
+      }
     },
     {
       "file": "facture_037.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 2,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "96030824628194",
+        "invoice_number": "F2026476-037",
+        "invoice_date": "2026-10-10",
+        "po_number": "PO-2026-40834",
+        "total_ht": 880.0,
+        "tva": 176.0,
+        "total_ttc": 1056.0
+      }
     },
     {
       "file": "facture_038.jpg",
       "expected": "BE_PO_NOT_FOUND",
       "actual": "BE_EXTRACTION_REVIEW",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "31067924708227",
+        "invoice_number": null,
+        "invoice_date": "2026-10-03",
+        "po_number": "PO-2026-22021",
+        "total_ht": 5570.0,
+        "tva": 1114.0,
+        "total_ttc": 6684.0
+      }
     },
     {
       "file": "facture_039.jpg",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "80141269060443",
+        "invoice_number": "F2026133-039",
+        "invoice_date": "2026-09-21",
+        "po_number": "PO-2026-20779",
+        "total_ht": 53.9,
+        "tva": 10.78,
+        "total_ttc": 64.68
+      }
     },
     {
       "file": "facture_040.jpg",
       "expected": "BE_UNKNOWN_SUPPLIER",
       "actual": "BE_UNKNOWN_SUPPLIER",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "65444463478612",
+        "invoice_number": "F2026916-040",
+        "invoice_date": "2026-09-09",
+        "po_number": "PO-2026-59527",
+        "total_ht": 44.1,
+        "tva": 8.82,
+        "total_ttc": 52.92
+      }
     },
     {
       "file": "facture_041.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "96030824628194",
+        "invoice_number": "F2026709-041",
+        "invoice_date": "2026-10-02",
+        "po_number": "PO-2026-24363",
+        "total_ht": 1320.0,
+        "tva": 264.0,
+        "total_ttc": 1584.0
+      }
     },
     {
       "file": "facture_042.jpg",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "83726167513613",
+        "invoice_number": "F2026853-042",
+        "invoice_date": "2026-09-17",
+        "po_number": "PO-2026-55992",
+        "total_ht": 778.8,
+        "tva": 155.76,
+        "total_ttc": 934.56
+      }
     },
     {
       "file": "facture_043.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "57551313735379",
+        "invoice_number": "F2026987-043",
+        "invoice_date": "2026-09-17",
+        "po_number": "PO-2026-72928",
+        "total_ht": 1412.5,
+        "tva": 282.5,
+        "total_ttc": 1695.0
+      }
     },
     {
       "file": "facture_044.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 2,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "80141269060443",
+        "invoice_number": "F2026186-044",
+        "invoice_date": "2026-09-18",
+        "po_number": "PO-2026-62883",
+        "total_ht": 1153.6,
+        "tva": 230.72,
+        "total_ttc": 1384.32
+      }
     },
     {
       "file": "facture_045.jpg",
       "expected": "BE_DUPLICATE_INVOICE",
       "actual": "BE_DUPLICATE_INVOICE",
       "attempts": 2,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "19829657249208",
+        "invoice_number": "F2026651-045",
+        "invoice_date": "2026-09-29",
+        "po_number": "PO-2026-57156",
+        "total_ht": 1040.0,
+        "tva": 208.0,
+        "total_ttc": 1248.0
+      }
     },
     {
       "file": "facture_046.jpg",
       "expected": "OK",
       "actual": "OK",
       "attempts": 2,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "80141269060443",
+        "invoice_number": "F2026644-046",
+        "invoice_date": "2026-09-24",
+        "po_number": "PO-2026-61675",
+        "total_ht": 67.5,
+        "tva": 13.5,
+        "total_ttc": 81.0
+      }
     },
     {
       "file": "facture_047.png",
       "expected": "BE_UNKNOWN_SUPPLIER",
       "actual": "BE_UNKNOWN_SUPPLIER",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "65444463478612",
+        "invoice_number": "F2026782-047",
+        "invoice_date": "2026-09-12",
+        "po_number": "PO-2026-20667",
+        "total_ht": 3324.0,
+        "tva": 664.8,
+        "total_ttc": 3988.8
+      }
     },
     {
       "file": "facture_048.jpg",
       "expected": "BE_PO_AMOUNT_MISMATCH",
       "actual": "BE_PO_AMOUNT_MISMATCH",
       "attempts": 2,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "80141269060443",
+        "invoice_number": "F2026259-048",
+        "invoice_date": "2026-10-08",
+        "po_number": "PO-2026-50641",
+        "total_ht": 67.5,
+        "tva": 13.5,
+        "total_ttc": 81.0
+      }
     },
     {
       "file": "facture_049.jpg",
       "expected": "OK",
       "actual": "SYSTEM_FAILED",
       "attempts": 3,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "19829657249208",
+        "invoice_number": "F2026297-049",
+        "invoice_date": "2026-09-27",
+        "po_number": "PO-2026-90747",
+        "total_ht": 566.6,
+        "tva": 113.32,
+        "total_ttc": 679.92
+      }
     },
     {
       "file": "facture_050.jpg",
       "expected": "BE_TOTAL_MISMATCH",
       "actual": "BE_TOTAL_MISMATCH",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "80141269060443",
+        "invoice_number": "F2026046-050",
+        "invoice_date": "2026-09-20",
+        "po_number": "PO-2026-12921",
+        "total_ht": 2284.7,
+        "tva": 456.94,
+        "total_ttc": 2731.64
+      }
     },
     {
       "file": "facture_051.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "96030824628194",
+        "invoice_number": "F2026136-051",
+        "invoice_date": "2026-10-01",
+        "po_number": "PO-2026-36762",
+        "total_ht": 3555.0,
+        "tva": 711.0,
+        "total_ttc": 4266.0
+      }
     },
     {
       "file": "facture_052.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "57551313735379",
+        "invoice_number": "F2026461-052",
+        "invoice_date": "2026-09-10",
+        "po_number": "PO-2026-22557",
+        "total_ht": 194.5,
+        "tva": 38.9,
+        "total_ttc": 233.4
+      }
     },
     {
       "file": "facture_053.jpg",
       "expected": "OK",
       "actual": "BE_EXTRACTION_REVIEW",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "31067924708227",
+        "invoice_number": null,
+        "invoice_date": "2026-10-08",
+        "po_number": "PO-2026-55918",
+        "total_ht": 1914.0,
+        "tva": 382.8,
+        "total_ttc": 2296.8
+      }
     },
     {
       "file": "facture_054.png",
       "expected": "BE_PO_NOT_FOUND",
       "actual": "BE_PO_NOT_FOUND",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "16786843353265",
+        "invoice_number": "F2026190-054",
+        "invoice_date": "2026-09-07",
+        "po_number": "PO-2026-41151",
+        "total_ht": 533.3,
+        "tva": 106.66,
+        "total_ttc": 639.96
+      }
     },
     {
       "file": "facture_055.png",
       "expected": "BE_UNKNOWN_SUPPLIER",
       "actual": "BE_UNKNOWN_SUPPLIER",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "65444463478612",
+        "invoice_number": "F2026672-055",
+        "invoice_date": "2026-09-13",
+        "po_number": "PO-2026-35855",
+        "total_ht": 990.0,
+        "tva": 198.0,
+        "total_ttc": 1188.0
+      }
     },
     {
       "file": "facture_056.jpg",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "80141269060443",
+        "invoice_number": "F2026910-056",
+        "invoice_date": "2026-09-01",
+        "po_number": "PO-2026-72642",
+        "total_ht": 1289.9,
+        "tva": 257.98,
+        "total_ttc": 1547.88
+      }
     },
     {
       "file": "facture_057.png",
       "expected": "BE_DUPLICATE_INVOICE",
       "actual": "BE_DUPLICATE_INVOICE",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "16786843353265",
+        "invoice_number": "F2026107-057",
+        "invoice_date": "2026-09-03",
+        "po_number": "PO-2026-44265",
+        "total_ht": 3533.6,
+        "tva": 706.72,
+        "total_ttc": 4240.32
+      }
     },
     {
       "file": "facture_058.jpg",
       "expected": "OK",
       "actual": "OK",
       "attempts": 2,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "96030824628194",
+        "invoice_number": "F2026651-058",
+        "invoice_date": "2026-10-14",
+        "po_number": "PO-2026-82586",
+        "total_ht": 814.1,
+        "tva": 162.82,
+        "total_ttc": 976.92
+      }
     },
     {
       "file": "facture_059.jpg",
       "expected": "OK",
       "actual": "BE_EXTRACTION_REVIEW",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "31067924708227",
+        "invoice_number": null,
+        "invoice_date": "2026-09-13",
+        "po_number": "PO-2026-44127",
+        "total_ht": 477.5,
+        "tva": 95.5,
+        "total_ttc": 573.0
+      }
     },
     {
       "file": "facture_060.jpg",
       "expected": "OK",
       "actual": "OK",
       "attempts": 2,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "57551313735379",
+        "invoice_number": "F2026929-060",
+        "invoice_date": "2026-10-13",
+        "po_number": "PO-2026-92666",
+        "total_ht": 3990.0,
+        "tva": 798.0,
+        "total_ttc": 4788.0
+      }
     },
     {
       "file": "facture_061.png",
       "expected": "BE_PO_AMOUNT_MISMATCH",
       "actual": "BE_EXTRACTION_REVIEW",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "31067924708227",
+        "invoice_number": null,
+        "invoice_date": "2026-10-08",
+        "po_number": "PO-2026-50337",
+        "total_ht": 2710.8,
+        "tva": 542.16,
+        "total_ttc": 3252.96
+      }
     },
     {
       "file": "facture_062.png",
       "expected": "BE_PO_AMOUNT_MISMATCH",
       "actual": "BE_PO_AMOUNT_MISMATCH",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "96030824628194",
+        "invoice_number": "F2026109-062",
+        "invoice_date": "2026-09-10",
+        "po_number": "PO-2026-91522",
+        "total_ht": 429.8,
+        "tva": 85.96,
+        "total_ttc": 515.76
+      }
     },
     {
       "file": "facture_063.jpg",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "19829657249208",
+        "invoice_number": "F2026141-063",
+        "invoice_date": "2026-10-15",
+        "po_number": "PO-2026-94350",
+        "total_ht": 4.9,
+        "tva": 0.98,
+        "total_ttc": 5.88
+      }
     },
     {
       "file": "facture_064.png",
       "expected": "BE_PO_NOT_FOUND",
       "actual": "BE_PO_NOT_FOUND",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "96030824628194",
+        "invoice_number": "F2026780-064",
+        "invoice_date": "2026-10-05",
+        "po_number": "PO-2026-57632",
+        "total_ht": 890.0,
+        "tva": 178.0,
+        "total_ttc": 1068.0
+      }
     },
     {
       "file": "facture_065.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "19829657249208",
+        "invoice_number": "F2026109-065",
+        "invoice_date": "2026-09-08",
+        "po_number": "PO-2026-42319",
+        "total_ht": 408.1,
+        "tva": 81.62,
+        "total_ttc": 489.72
+      }
     },
     {
       "file": "facture_066.jpg",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "96030824628194",
+        "invoice_number": "F2026844-066",
+        "invoice_date": "2026-10-01",
+        "po_number": "PO-2026-92776",
+        "total_ht": 79.8,
+        "tva": 15.96,
+        "total_ttc": 95.76
+      }
     },
     {
       "file": "facture_067.png",
       "expected": "BE_DUPLICATE_INVOICE",
       "actual": "BE_DUPLICATE_INVOICE",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "96030824628194",
+        "invoice_number": "F2026326-067",
+        "invoice_date": "2026-09-02",
+        "po_number": "PO-2026-54107",
+        "total_ht": 1729.0,
+        "tva": 345.8,
+        "total_ttc": 2074.8
+      }
     },
     {
       "file": "facture_068.jpg",
       "expected": "BE_TOTAL_MISMATCH",
       "actual": "BE_TOTAL_MISMATCH",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "83726167513613",
+        "invoice_number": "F2026515-068",
+        "invoice_date": "2026-09-02",
+        "po_number": "PO-2026-72401",
+        "total_ht": 2247.3,
+        "tva": 449.46,
+        "total_ttc": 2706.76
+      }
     },
     {
       "file": "facture_069.jpg",
       "expected": "BE_PO_NOT_FOUND",
       "actual": "BE_PO_NOT_FOUND",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "16786843353265",
+        "invoice_number": "F2026721-069",
+        "invoice_date": "2026-09-14",
+        "po_number": "PO-2026-16306",
+        "total_ht": 1512.0,
+        "tva": 302.4,
+        "total_ttc": 1814.4
+      }
     },
     {
       "file": "facture_070.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "19829657249208",
+        "invoice_number": "F2026174-070",
+        "invoice_date": "2026-09-13",
+        "po_number": "PO-2026-67154",
+        "total_ht": 550.0,
+        "tva": 110.0,
+        "total_ttc": 660.0
+      }
     },
     {
       "file": "facture_071.jpg",
       "expected": "OK",
       "actual": "OK",
       "attempts": 2,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "83726167513613",
+        "invoice_number": "F2026502-071",
+        "invoice_date": "2026-09-12",
+        "po_number": "PO-2026-22542",
+        "total_ht": 29.4,
+        "tva": 5.88,
+        "total_ttc": 35.28
+      }
     },
     {
       "file": "facture_072.jpg",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "16786843353265",
+        "invoice_number": "F2026960-072",
+        "invoice_date": "2026-09-08",
+        "po_number": "PO-2026-40346",
+        "total_ht": 835.0,
+        "tva": 167.0,
+        "total_ttc": 1002.0
+      }
     },
     {
       "file": "facture_073.jpg",
       "expected": "OK",
       "actual": "OK",
       "attempts": 2,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "19829657249208",
+        "invoice_number": "F2026574-073",
+        "invoice_date": "2026-09-23",
+        "po_number": "PO-2026-23704",
+        "total_ht": 3180.0,
+        "tva": 636.0,
+        "total_ttc": 3816.0
+      }
     },
     {
       "file": "facture_074.png",
       "expected": "BE_UNKNOWN_SUPPLIER",
       "actual": "BE_UNKNOWN_SUPPLIER",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "65444463478612",
+        "invoice_number": "F2026913-074",
+        "invoice_date": "2026-10-12",
+        "po_number": "PO-2026-21294",
+        "total_ht": 2170.0,
+        "tva": 434.0,
+        "total_ttc": 2604.0
+      }
     },
     {
       "file": "facture_075.jpg",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "96030824628194",
+        "invoice_number": "F2026175-075",
+        "invoice_date": "2026-10-11",
+        "po_number": "PO-2026-59716",
+        "total_ht": 1657.5,
+        "tva": 331.5,
+        "total_ttc": 1989.0
+      }
     },
     {
       "file": "facture_076.jpg",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "57551313735379",
+        "invoice_number": "F2026595-076",
+        "invoice_date": "2026-09-29",
+        "po_number": "PO-2026-52816",
+        "total_ht": 6339.4,
+        "tva": 1267.88,
+        "total_ttc": 7607.28
+      }
     },
     {
       "file": "facture_077.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "19829657249208",
+        "invoice_number": "F2026236-077",
+        "invoice_date": "2026-10-12",
+        "po_number": "PO-2026-26522",
+        "total_ht": 6615.0,
+        "tva": 1323.0,
+        "total_ttc": 7938.0
+      }
     },
     {
       "file": "facture_078.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 2,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "19829657249208",
+        "invoice_number": "F2026772-078",
+        "invoice_date": "2026-09-10",
+        "po_number": "PO-2026-90914",
+        "total_ht": 417.5,
+        "tva": 83.5,
+        "total_ttc": 501.0
+      }
     },
     {
       "file": "facture_079.png",
       "expected": "BE_PO_NOT_FOUND",
       "actual": "BE_PO_NOT_FOUND",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "57551313735379",
+        "invoice_number": "F2026978-079",
+        "invoice_date": "2026-09-07",
+        "po_number": "PO-2026-34808",
+        "total_ht": 2457.0,
+        "tva": 491.4,
+        "total_ttc": 2948.4
+      }
     },
     {
       "file": "facture_080.jpg",
       "expected": "BE_UNKNOWN_SUPPLIER",
       "actual": "BE_UNKNOWN_SUPPLIER",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "65444463478612",
+        "invoice_number": "F2026154-080",
+        "invoice_date": "2026-09-20",
+        "po_number": "PO-2026-29440",
+        "total_ht": 1129.8,
+        "tva": 225.96,
+        "total_ttc": 1355.76
+      }
     },
     {
       "file": "facture_081.jpg",
       "expected": "OK",
       "actual": "OK",
       "attempts": 2,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "16786843353265",
+        "invoice_number": "F2026906-081",
+        "invoice_date": "2026-09-01",
+        "po_number": "PO-2026-60900",
+        "total_ht": 409.8,
+        "tva": 81.96,
+        "total_ttc": 491.76
+      }
     },
     {
       "file": "facture_082.jpg",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "16786843353265",
+        "invoice_number": "F2026263-082",
+        "invoice_date": "2026-09-01",
+        "po_number": "PO-2026-89129",
+        "total_ht": 1352.9,
+        "tva": 270.58,
+        "total_ttc": 1623.48
+      }
     },
     {
       "file": "facture_083.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "19829657249208",
+        "invoice_number": "F2026767-083",
+        "invoice_date": "2026-09-15",
+        "po_number": "PO-2026-94829",
+        "total_ht": 4820.0,
+        "tva": 964.0,
+        "total_ttc": 5784.0
+      }
     },
     {
       "file": "facture_084.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "19829657249208",
+        "invoice_number": "F2026464-084",
+        "invoice_date": "2026-10-11",
+        "po_number": "PO-2026-66692",
+        "total_ht": 199.5,
+        "tva": 39.9,
+        "total_ttc": 239.4
+      }
     },
     {
       "file": "facture_085.jpg",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "19829657249208",
+        "invoice_number": "F2026801-085",
+        "invoice_date": "2026-10-11",
+        "po_number": "PO-2026-62446",
+        "total_ht": 1240.0,
+        "tva": 248.0,
+        "total_ttc": 1488.0
+      }
     },
     {
       "file": "facture_086.jpg",
       "expected": "BE_DUPLICATE_INVOICE",
       "actual": "BE_DUPLICATE_INVOICE",
       "attempts": 3,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "57551313735379",
+        "invoice_number": "F2026530-086",
+        "invoice_date": "2026-09-12",
+        "po_number": "PO-2026-98505",
+        "total_ht": 3515.0,
+        "tva": 703.0,
+        "total_ttc": 4218.0
+      }
     },
     {
       "file": "facture_087.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 2,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "19829657249208",
+        "invoice_number": "F2026556-087",
+        "invoice_date": "2026-09-13",
+        "po_number": "PO-2026-38558",
+        "total_ht": 588.8,
+        "tva": 117.76,
+        "total_ttc": 706.56
+      }
     },
     {
       "file": "facture_088.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "80141269060443",
+        "invoice_number": "F2026487-088",
+        "invoice_date": "2026-09-24",
+        "po_number": "PO-2026-77133",
+        "total_ht": 5075.0,
+        "tva": 1015.0,
+        "total_ttc": 6090.0
+      }
     },
     {
       "file": "facture_089.png",
       "expected": "BE_PO_AMOUNT_MISMATCH",
       "actual": "BE_PO_AMOUNT_MISMATCH",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "80141269060443",
+        "invoice_number": "F2026401-089",
+        "invoice_date": "2026-10-10",
+        "po_number": "PO-2026-77343",
+        "total_ht": 4899.7,
+        "tva": 979.94,
+        "total_ttc": 5879.64
+      }
     },
     {
       "file": "facture_090.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 3,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "83726167513613",
+        "invoice_number": "F2026391-090",
+        "invoice_date": "2026-09-05",
+        "po_number": "PO-2026-62387",
+        "total_ht": 37.5,
+        "tva": 7.5,
+        "total_ttc": 45.0
+      }
     },
     {
       "file": "facture_091.jpg",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "16786843353265",
+        "invoice_number": "F2026310-091",
+        "invoice_date": "2026-10-04",
+        "po_number": "PO-2026-62491",
+        "total_ht": 1624.2,
+        "tva": 324.84,
+        "total_ttc": 1949.04
+      }
     },
     {
       "file": "facture_092.jpg",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "57551313735379",
+        "invoice_number": "F2026657-092",
+        "invoice_date": "2026-09-10",
+        "po_number": "PO-2026-83669",
+        "total_ht": 4499.0,
+        "tva": 899.8,
+        "total_ttc": 5398.8
+      }
     },
     {
       "file": "facture_093.jpg",
       "expected": "BE_UNKNOWN_SUPPLIER",
       "actual": "BE_UNKNOWN_SUPPLIER",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "65444463478612",
+        "invoice_number": "F2026665-093",
+        "invoice_date": "2026-10-01",
+        "po_number": "PO-2026-26405",
+        "total_ht": 2986.4,
+        "tva": 597.28,
+        "total_ttc": 3583.68
+      }
     },
     {
       "file": "facture_094.png",
       "expected": "BE_TOTAL_MISMATCH",
       "actual": "BE_TOTAL_MISMATCH",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "83726167513613",
+        "invoice_number": "F2026259-094",
+        "invoice_date": "2026-09-18",
+        "po_number": "PO-2026-65850",
+        "total_ht": 3500.0,
+        "tva": 700.0,
+        "total_ttc": 4199.1
+      }
     },
     {
       "file": "facture_095.png",
       "expected": "BE_TOTAL_MISMATCH",
       "actual": "BE_TOTAL_MISMATCH",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "83726167513613",
+        "invoice_number": "F2026496-095",
+        "invoice_date": "2026-09-20",
+        "po_number": "PO-2026-66163",
+        "total_ht": 1711.5,
+        "tva": 342.3,
+        "total_ttc": 1953.8
+      }
     },
     {
       "file": "facture_096.jpg",
       "expected": "OK",
       "actual": "BE_EXTRACTION_REVIEW",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "31067924708227",
+        "invoice_number": null,
+        "invoice_date": "2026-09-14",
+        "po_number": "PO-2026-11964",
+        "total_ht": 6528.8,
+        "tva": 1305.76,
+        "total_ttc": 7834.56
+      }
     },
     {
       "file": "facture_097.png",
       "expected": "OK",
       "actual": "OK",
       "attempts": 1,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "96030824628194",
+        "invoice_number": "F2026190-097",
+        "invoice_date": "2026-09-10",
+        "po_number": "PO-2026-69239",
+        "total_ht": 2645.0,
+        "tva": 529.0,
+        "total_ttc": 3174.0
+      }
     },
     {
       "file": "facture_098.jpg",
       "expected": "OK",
       "actual": "OK",
       "attempts": 2,
-      "in_erp": true
+      "in_erp": true,
+      "extracted": {
+        "supplier_siret": "57551313735379",
+        "invoice_number": "F2026806-098",
+        "invoice_date": "2026-09-13",
+        "po_number": "PO-2026-93439",
+        "total_ht": 2184.1,
+        "tva": 436.82,
+        "total_ttc": 2620.92
+      }
     },
     {
       "file": "facture_099.jpg",
       "expected": "BE_PO_NOT_FOUND",
       "actual": "BE_PO_NOT_FOUND",
       "attempts": 1,
-      "in_erp": false
+      "in_erp": false,
+      "extracted": {
+        "supplier_siret": "16786843353265",
+        "invoice_number": "F2026687-099",
+        "invoice_date": "2026-09-17",
+        "po_number": "PO-2026-25332",
+        "total_ht": 656.4,
+        "tva": 131.28,
+        "total_ttc": 787.68
+      }
     }
   ]
 }

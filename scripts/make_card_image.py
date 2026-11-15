@@ -2,9 +2,12 @@
 next to the measured run results. Nothing in the image is typed by hand: boxes come from Tesseract,
 values from the extractor, numbers from reports/*.json.
 
-Usage: python scripts/make_card_image.py [facture_XXX.jpg] [--uipath]
+Usage: python scripts/make_card_image.py [facture_XXX.jpg] [--uipath | --du]
        --uipath  label it as the UiPath REFramework robot and take the numbers from reports/uipath_performer.json
                  (written to docs/overview_uipath.png)
+       --du      the UiPath robot with Document Understanding: values are the ones DU returned for this scan
+                 and the numbers come from reports/uipath_du_performer.json (written to docs/overview_uipath_du.png).
+                 Tesseract is only used to find which printed lines to highlight.
 """
 from __future__ import annotations
 
@@ -48,11 +51,16 @@ def line_boxes(path: Path) -> list[tuple[str, tuple[int, int, int, int]]]:
 
 
 def main() -> None:
-    uipath = "--uipath" in sys.argv
-    args = [a for a in sys.argv[1:] if a != "--uipath"]
+    du = "--du" in sys.argv
+    uipath = "--uipath" in sys.argv or du
+    args = [a for a in sys.argv[1:] if a not in ("--uipath", "--du")]
     name = args[0] if args else "facture_053.jpg"
     path = INBOX / name
     ex = read_invoice(str(path))
+    if du:
+        du_report = json.loads((ROOT / "reports" / "uipath_du_performer.json").read_text(encoding="utf-8"))
+        doc = next(d for d in du_report["per_document"] if d["file"] == name)
+        ex.fields, ex.confidence = {k: v for k, v in doc["extracted"].items() if v is not None}, {}
     report = json.loads((ROOT / "reports" / "ai_fallback.json").read_text(encoding="utf-8"))
     base = json.loads((ROOT / "reports" / "baseline.json").read_text(encoding="utf-8"))
 
@@ -62,7 +70,8 @@ def main() -> None:
     d.rounded_rectangle((16, 16, W - 16, H - 16), 14, fill=PANEL)
     for i, col in enumerate(("#ef4444", "#f59e0b", "#22c55e")):
         d.ellipse((36 + i * 22, 34, 48 + i * 22, 46), fill=col)
-    title = ("UiPath Studio · REFramework Performer · Orchestrator queue Invoices" if uipath
+    title = ("UiPath REFramework · Document Understanding · Action Center · queue InvoicesDU" if du
+             else "UiPath Studio · REFramework Performer · Orchestrator queue Invoices" if uipath
              else "ROBOT-01 · REFramework · queue FACTURES_FOURNISSEURS")
     d.text((110, 30), title, font=mono(15), fill=MUTED)
 
@@ -87,7 +96,8 @@ def main() -> None:
 
     # right: extracted fields + measured results
     x = 40 + scan.width + 36
-    d.text((x, 70), "Extracted · checked · booked", font=f(26, True), fill=INK)
+    d.text((x, 70), "Read by DU · checked · booked" if du else "Extracted · checked · booked",
+           font=f(26, True), fill=INK)
     labels = {"supplier_siret": "SIRET", "invoice_number": "Invoice n°", "invoice_date": "Date", "po_number": "PO",
               "total_ht": "Total HT", "tva": "TVA", "total_ttc": "Total TTC"}
     y = 118
@@ -110,7 +120,17 @@ def main() -> None:
         (f"{bst['rate_pct']:.0f}→{st['rate_pct']:.0f}%", "no-touch rate, rules → +LLM", BLUE),
         (f"{report['erp']['double_bookings']}", "double bookings, ERP chaos on", GREEN),
     ]
-    if uipath:
+    if du:
+        report = du_report
+        be, st, se = report["business_exceptions"], report["straight_through"], report["system_exceptions"]
+        rows = [
+            (f"{be['wrongly_booked']}", "invalid invoices booked", GREEN),
+            (f"{be['stopped_before_booking']}/{be['injected']}", "injected errors stopped", GREEN),
+            (f"{st['rate_pct']:.0f}%", f"no-touch ({st['booked']}/{st['expected']} valid)", BLUE),
+            (f"{report['action_center']['validation_tasks_created']}", "sent to Action Center for review", AMBER),
+            (f"{report['erp']['double_bookings']}", "double bookings, ERP chaos on", GREEN),
+        ]
+    elif uipath:
         report = json.loads((ROOT / "reports" / "uipath_performer.json").read_text(encoding="utf-8"))
         be, st, se = report["business_exceptions"], report["straight_through"], report["system_exceptions"]
         rows = [
@@ -126,7 +146,7 @@ def main() -> None:
         y += 46
     d.text((x, H - 58), f"Measured on {report['documents']} invoices vs ground truth", font=f(14), fill=MUTED)
 
-    out = ROOT / "docs" / ("overview_uipath.png" if uipath else "overview.png")
+    out = ROOT / "docs" / ("overview_uipath_du.png" if du else "overview_uipath.png" if uipath else "overview.png")
     canvas.save(out)
     print(out, ex.fields)
 
